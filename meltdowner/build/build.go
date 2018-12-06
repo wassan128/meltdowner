@@ -1,11 +1,9 @@
-package main
+package build
 
 import (
 	"fmt"
-	"io/ioutil"
-	"os"
-	"log"
 
+	"github.com/wassan128/meltdowner/meltdowner/file"
 	"gopkg.in/russross/blackfriday.v2"
 )
 
@@ -45,44 +43,23 @@ func md2HTML(md []byte, renderer *blackfriday.HTMLRenderer) string {
 		blackfriday.WithExtensions(extFlags),
 		blackfriday.WithRenderer(renderer))
 	return string(html)
-
 }
 
-func createDirForPublish() {
-	if err := os.Mkdir("public", 0777); err != nil {
-		fmt.Println(err)
-	}
-}
-func createFile(filename string) *os.File {
-	file, err := os.OpenFile(filename, os.O_WRONLY | os.O_CREATE, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return file
-}
-func moveFile(dstPath string, srcPath string) {
-	if err := os.Rename(dstPath, srcPath); err != nil {
-		fmt.Println(err)
-	}
-}
-
-func main() {
-	md, err := ioutil.ReadFile(os.Args[1])
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+func Run() {
+	md := file.LoadMarkdown("source/test.md")
+	if md == nil {
+		fmt.Println("markdown load error")
 		return
 	}
 
 	renderer := getRenderer()
 	html := md2HTML(md, renderer)
 
-	createDirForPublish()
-	index := createFile("index.html")
+	file.CreateDirForPublish()
+	index := file.CreateFile("index.html")
 	defer index.Close()
 
-	moveFile("index.html", "public/index.html")
-
+	file.MoveFile("index.html", "public/index.html")
 	fmt.Fprintln(index, html)
 }
 
