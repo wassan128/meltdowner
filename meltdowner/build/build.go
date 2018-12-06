@@ -45,7 +45,24 @@ func md2HTML(md []byte, renderer *blackfriday.HTMLRenderer) string {
 	return string(html)
 }
 
+func checkDirectoryExistence() bool {
+	if !file.IsExistPath("source") {
+		fmt.Println("[Error] source/ does not exists.")
+		return false
+	}
+	if !file.IsExistPath("theme") {
+		fmt.Println("[Error] theme/ does not exists.")
+		return false
+	}
+	return true
+}
+
 func Run() {
+	if ok := checkDirectoryExistence(); !ok {
+		fmt.Println("exit.")
+		return
+	}
+
 	md := file.LoadMarkdown("source/test.md")
 	if md == nil {
 		fmt.Println("markdown load error")
