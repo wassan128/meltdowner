@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/wassan128/meltdowner/meltdowner/file"
+	"github.com/wassan128/meltdowner/meltdowner/parser"
 	"gopkg.in/russross/blackfriday.v2"
 )
 
@@ -63,14 +64,16 @@ func Run() {
 		return
 	}
 
-	md := file.LoadMarkdown("source/test.md")
+	md := file.LoadMarkdown("source/hello-world.md")
 	if md == nil {
 		fmt.Println("markdown load error")
 		return
 	}
 
+	post := parser.ParseMarkdown(md)
+
 	renderer := getRenderer()
-	html := md2HTML(md, renderer)
+	html := md2HTML(post.Body, renderer)
 
 	file.CreateDirForPublish()
 	index := file.CreateFile("index.html")
