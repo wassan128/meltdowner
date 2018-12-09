@@ -5,8 +5,22 @@ import (
 	"io/ioutil"
 	"os"
 	"log"
+	"path/filepath"
 )
 
+func GetMarkdownPaths(sourceDir string) []string {
+	dir, err := ioutil.ReadDir(sourceDir)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var paths []string
+	for _, file := range dir {
+		paths = append(paths, filepath.Join(sourceDir, file.Name()))
+	}
+
+	return paths
+}
 func CreateDir(dirname string) {
 	if err := os.Mkdir(dirname, 0777); err != nil {
 		fmt.Println(err)
@@ -23,7 +37,7 @@ func CreateFile(filename string) *os.File {
 func LoadFileContents(filename string) []byte {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Println(err)
 		return nil
 	}
 	return content
