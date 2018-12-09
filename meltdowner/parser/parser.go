@@ -22,9 +22,9 @@ func ParseMarkdown(markdown []byte) *Post {
 	for ; lines[cur] != "---"; cur++ {
 		switch header := strings.Split(lines[cur], ":"); header[0] {
 		case "title":
-			post.Header.Title = header[1]
+			post.Header.Title = strings.TrimSpace(header[1])
 		case "date":
-			post.Header.CreatedAt = header[1]
+			post.Header.CreatedAt = strings.TrimSpace(header[1])
 		}
 	}
 	cur++
