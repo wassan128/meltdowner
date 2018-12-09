@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-func CreateDirForPublish() {
-	if err := os.Mkdir("public", 0777); err != nil {
+func CreateDir(dirname string) {
+	if err := os.Mkdir(dirname, 0777); err != nil {
 		fmt.Println(err)
 	}
 }

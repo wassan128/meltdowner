@@ -86,7 +86,7 @@ func Run() {
 
 	htmlString := concatTemplates(content)
 
-	file.CreateDirForPublish()
+	file.CreateDir("public")
 	htmlFile := file.CreateFile("index.html")
 	defer htmlFile.Close()
 
