@@ -4,14 +4,37 @@ import (
 	"strings"
 )
 
+const (
+	YEAR int = iota
+	MONTH
+	DATE
+)
+
+type CreatedAt struct {
+	Year string
+	Month string
+	Date string
+}
+
 type Header struct {
 	Title string
-	CreatedAt string
+	Date CreatedAt
 	Tags []string
 }
 type Post struct {
 	Header Header
 	Body []byte
+}
+
+func parseDate(dateStr string) CreatedAt {
+	date := strings.Split(dateStr, "-")
+
+	var createdAt CreatedAt
+	createdAt.Year = date[YEAR]
+	createdAt.Month = date[MONTH]
+	createdAt.Date = date[DATE]
+
+	return createdAt
 }
 
 func ParseMarkdown(markdown []byte) *Post {
@@ -24,7 +47,7 @@ func ParseMarkdown(markdown []byte) *Post {
 		case "title":
 			post.Header.Title = strings.TrimSpace(header[1])
 		case "date":
-			post.Header.CreatedAt = strings.TrimSpace(header[1])
+			post.Header.Date = parseDate(strings.TrimSpace(header[1]))
 		}
 	}
 	cur++
