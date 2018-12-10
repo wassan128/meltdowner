@@ -1,5 +1,8 @@
 package build
-import ( "fmt"
+import (
+	"os"
+	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/wassan128/meltdowner/meltdowner/file"
@@ -66,6 +69,20 @@ func concatTemplates(content string) string {
 	return html
 }
 
+func createPostDir(publicDir string, createdAt parser.CreatedAt) string {
+	var postPath string
+
+	paths := []string{publicDir, createdAt.Year, createdAt.Month, createdAt.Date}
+	for _, path := range paths {
+		postPath = filepath.Join(postPath, path)
+		if _, err := os.Stat(postPath); err != nil {
+			file.CreateDir(postPath)
+		}
+	}
+
+	return postPath
+}
+
 func Run() {
 	// check `source/` and `template/` existence.
 	if ok := checkDirectoryExistence(); !ok {
@@ -73,24 +90,31 @@ func Run() {
 		return
 	}
 
-	md := file.LoadFileContents("source/hello-world.md")
-	if md == nil {
-		fmt.Println("markdown load error")
-		return
-	}
-
-	post := parser.ParseMarkdown(md)
-
 	renderer := getRenderer()
-	content := md2HTML(post.Body, renderer)
 
-	htmlString := concatTemplates(content)
+	mds := file.GetMarkdownPaths("source")
 
-	file.CreateDir("public")
-	htmlFile := file.CreateFile("index.html")
-	defer htmlFile.Close()
+	for _, mdPath := range mds {
+		fmt.Println("[*] Start: ", mdPath)
+		md := file.LoadFileContents(mdPath)
+		if md == nil {
+			fmt.Println("markdown load error")
+			return
+		}
 
-	file.MoveFile("index.html", "public/index.html")
-	fmt.Fprintln(htmlFile, htmlString)
+		post := parser.ParseMarkdown(md)
+
+		content := md2HTML(post.Body, renderer)
+
+		htmlString := concatTemplates(content)
+		htmlFile := file.CreateFile("index.html")
+		defer htmlFile.Close()
+
+		postPath := createPostDir("public", post.Header.Date)
+
+		file.MoveFile("index.html", filepath.Join(postPath, "index.html"))
+		fmt.Fprintln(htmlFile, htmlString)
+		fmt.Println("[*] Done: ", postPath)
+	}
 }
 
