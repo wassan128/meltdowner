@@ -104,7 +104,8 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 		post := parser.ParseMarkdown(md)
 		posts = append(posts, *post)
 
-		content := md2HTML(post.Body, renderer)
+		title := []byte(fmt.Sprintf("# %s\n", post.Header.Title))
+		content := md2HTML(append(title, post.Body...), renderer)
 
 		htmlString := concatTemplates(content)
 		htmlFile := file.CreateFile("index.html")
