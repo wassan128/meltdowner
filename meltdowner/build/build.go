@@ -116,6 +116,6 @@ func Run() {
 		fmt.Fprintln(htmlFile, htmlString)
 		fmt.Println("[*] Done: ", postPath)
 	}
-	file.CopyDir("theme", filepath.Join("public", "theme"))
+	file.CopyDir(filepath.Join("theme", "css"), filepath.Join("public", "css"))
 }
 
