@@ -4,12 +4,16 @@ import (
 	"os"
 	"fmt"
 	"path/filepath"
+	"text/template"
 	"strings"
 
+	"github.com/wassan128/meltdowner/meltdowner/config"
 	"github.com/wassan128/meltdowner/meltdowner/file"
 	"github.com/wassan128/meltdowner/meltdowner/parser"
 	"gopkg.in/russross/blackfriday.v2"
 )
+
+var Config config.Config = config.GetConfig()
 
 func setHTMLFlags() blackfriday.HTMLFlags {
 	htmlFlags := blackfriday.CommonHTMLFlags
@@ -25,8 +29,6 @@ func getRenderer() *blackfriday.HTMLRenderer {
 	return blackfriday.NewHTMLRenderer(
 		blackfriday.HTMLRendererParameters{
 			Flags: htmlFlags,
-			Title: "",
-			CSS: "",
 		},
 	)
 }
@@ -62,6 +64,10 @@ func checkDirectoryExistence() bool {
 }
 
 func concatTemplates(content string) string {
+	headerHtml := file.CreateFile("theme/template/header.html")
+	headerTmpl := template.Must(template.ParseFiles("theme/template/header.tmpl"))
+	headerTmpl.Execute(headerHtml, Config.Blog)
+
 	header := string(file.LoadFileContents("theme/template/header.html"))
 	footer := string(file.LoadFileContents("theme/template/footer.html"))
 
