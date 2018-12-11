@@ -83,26 +83,19 @@ func createPostDir(publicDir string, createdAt parser.CreatedAt) string {
 	return postPath
 }
 
-func Run() {
-	// check `source/` and `template/` existence.
-	if ok := checkDirectoryExistence(); !ok {
-		fmt.Println("exit.")
-		return
-	}
-
-	renderer := getRenderer()
-
-	mds := file.GetMarkdownPaths("source")
+func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Post {
+	var posts []parser.Post
 
 	for _, mdPath := range mds {
 		fmt.Println("[*] Start: ", mdPath)
 		md := file.LoadFileContents(mdPath)
 		if md == nil {
 			fmt.Println("markdown load error")
-			return
+			return nil
 		}
 
 		post := parser.ParseMarkdown(md)
+		posts = append(posts, *post)
 
 		content := md2HTML(post.Body, renderer)
 
@@ -116,6 +109,39 @@ func Run() {
 		fmt.Fprintln(htmlFile, htmlString)
 		fmt.Println("[*] Done: ", postPath)
 	}
+
+	return posts
+}
+
+func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
+	var mdTop string
+	for _, post := range posts {
+		mdTop += fmt.Sprintf("* [%s](/%s/%s/%s)\n", post.Header.Title,
+			post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
+	}
+
+	content := md2HTML([]byte(mdTop), renderer)
+	htmlString := concatTemplates(content)
+	htmlFile := file.CreateFile("index.html")
+	defer htmlFile.Close()
+
+	file.MoveFile("index.html", filepath.Join("public", "index.html"))
+	fmt.Fprintln(htmlFile, htmlString)
+}
+
+func Run() {
+	// check `source/` and `template/` existence.
+	if ok := checkDirectoryExistence(); !ok {
+		fmt.Println("exit.")
+		return
+	}
+
+	renderer := getRenderer()
+	mds := file.GetMarkdownPaths("source")
+
+	posts := generatePosts(renderer, mds)
+	generateTopPage(renderer, posts)
+
 	file.CopyDir(filepath.Join("theme", "css"), filepath.Join("public", "css"))
 }
 
