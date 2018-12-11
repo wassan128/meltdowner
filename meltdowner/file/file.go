@@ -30,7 +30,7 @@ func CopyDir(srcPath, dstPath string) {
 }
 func CreateDir(dirname string) {
 	if err := os.Mkdir(dirname, 0777); err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 }
 func CreateFile(filename string) *os.File {
@@ -40,6 +40,16 @@ func CreateFile(filename string) *os.File {
 	}
 
 	return file
+}
+func RemoveFile(filename string) {
+	if err := os.Remove(filename); err != nil {
+		log.Fatal(err)
+	}
+}
+func RemoveDir(dirname string) {
+	if err := os.RemoveAll(dirname); err != nil {
+		log.Fatal(err)
+	}
 }
 func LoadFileContents(filename string) []byte {
 	content, err := ioutil.ReadFile(filename)

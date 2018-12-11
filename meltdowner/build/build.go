@@ -136,12 +136,19 @@ func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
 	fmt.Fprintln(htmlFile, htmlString)
 }
 
+func reset() {
+	file.RemoveDir("public")
+	file.RemoveFile("theme/template/header.html")
+}
+
 func Run() {
 	// check `source/` and `template/` existence.
 	if ok := checkDirectoryExistence(); !ok {
 		fmt.Println("exit.")
 		return
 	}
+
+	reset()
 
 	renderer := getRenderer()
 	mds := file.GetMarkdownPaths("source")
