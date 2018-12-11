@@ -6,6 +6,8 @@ import (
 	"os"
 	"log"
 	"path/filepath"
+
+	"github.com/otiai10/copy"
 )
 
 func GetMarkdownPaths(sourceDir string) []string {
@@ -20,6 +22,11 @@ func GetMarkdownPaths(sourceDir string) []string {
 	}
 
 	return paths
+}
+func CopyDir(srcPath, dstPath string) {
+	if err := copy.Copy(srcPath, dstPath); err != nil {
+		fmt.Println(err)
+	}
 }
 func CreateDir(dirname string) {
 	if err := os.Mkdir(dirname, 0777); err != nil {
