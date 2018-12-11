@@ -132,7 +132,7 @@ func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
 	htmlFile := file.CreateFile("index.html")
 	defer htmlFile.Close()
 
-	file.MoveFile("index.html", filepath.Join("public", "index.html"))
+	file.MoveFile("index.html", "public/index.html")
 	fmt.Fprintln(htmlFile, htmlString)
 }
 
@@ -149,6 +149,6 @@ func Run() {
 	posts := generatePosts(renderer, mds)
 	generateTopPage(renderer, posts)
 
-	file.CopyDir(filepath.Join("theme", "css"), filepath.Join("public", "css"))
+	file.CopyDir("theme/css", "public/css")
 }
 
