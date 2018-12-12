@@ -7,21 +7,41 @@
 	font-weight: normal;
 }
 html {
-	background: #333; }
+	background: #333;
+}
 body {
 	background: #eee;
+	background: url("images/wood_ptn.png");
 }
 	header {
-		height: 200px;
-		line-height: 200px;
-		background-color: #666;
-		background-image: url("https://wassan128.github.io/blog/css/images/banner.jpg");
+		padding: 50px;
+		background-color: #333;
+		background-image: url("images/banner.jpg");
 		background-size: cover;
 		background-position: center;
+		box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.5) inset;
 	}
-		header h1 {
+		header h1, header h3 {
 			color: #fff;
 			text-align: center;
+			font-family: "IPAゴシック";
+			font-weight: 300;
+			text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+		}
+		header img {
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			display: block;
+			margin: 0 auto;
+			padding: 10px;
+			border: 3px solid #fff;
+		}
+		header h1 {
+			font-size: 28pt;
+		}
+		header h3 {
+			font-size: 12pt;
 		}
 	main {
 		background: #fff;
@@ -30,12 +50,13 @@ body {
 		padding: 2em;
 	}
 		main * {
-			padding: 0.5em 0 0.5em;
+			padding: 0.5em 0;
 		}
 		main h1, main h2, main h3 {
 			color: #444;
 			border-bottom: 1px solid #ccc;
 			font-weight: bold;
+			padding: 0.5em 0 0.1em;
 		}
 
 		main pre {
@@ -48,8 +69,9 @@ body {
 		}
 
 	footer {
+		font-size: 8pt;
 		color: #eee;
-		background: #333;
+		background: #111;
 		padding: 1em;
 		text-align: center;
 	}

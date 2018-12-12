@@ -6,6 +6,8 @@ import (
 
 type BlogInfo struct {
 	Title string
+	SubTitle string
+	IconURL string
 	Author string
 }
 type GitHubInfo struct {
