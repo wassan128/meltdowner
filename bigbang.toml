@@ -1,7 +1,9 @@
 [blog]
-title = "test blog"
+title = "MeltDowner"
+subtitle = "subtitle"
+iconurl = ""
 author = "wassan128"
 
 [github]
-repo = "git@github.com:wassan128/blog"
+repo = ""
 
