@@ -4,4 +4,52 @@
 	margin: 0;
 	padding: 0;
 	font-family: "Rounded Mplus 1c";
+	font-weight: normal;
 }
+html {
+	background: #333; }
+body {
+	background: #eee;
+}
+	header {
+		height: 200px;
+		line-height: 200px;
+		background-color: #666;
+		background-image: url("https://wassan128.github.io/blog/css/images/banner.jpg");
+		background-size: cover;
+		background-position: center;
+	}
+		header h1 {
+			color: #fff;
+			text-align: center;
+		}
+	main {
+		background: #fff;
+		width: 80%;
+		margin: 1em auto;
+		padding: 2em;
+	}
+		main * {
+			padding: 0.5em 0 0.5em;
+		}
+		main h1, main h2, main h3 {
+			color: #444;
+			border-bottom: 1px solid #ccc;
+			font-weight: bold;
+		}
+
+		main pre {
+			color: #eee;
+			background: #333;
+			padding: 0.5em;
+		}
+		main ul {
+			list-style-type: none;
+		}
+
+	footer {
+		color: #eee;
+		background: #333;
+		padding: 1em;
+		text-align: center;
+	}
