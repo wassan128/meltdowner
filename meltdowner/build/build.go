@@ -122,11 +122,14 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 }
 
 func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
-	var mdTop string
+	mdTop := "<ul class='top'>\n"
 	for _, post := range posts {
-		mdTop += fmt.Sprintf("* [%s](/%s/%s/%s)\n", post.Header.Title,
-			post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
+		mdTop += fmt.Sprintf("<li><a href='/%s/%s/%s'>%s</a></li>\n", post.Header.Date.Year,
+			post.Header.Date.Month, post.Header.Date.Date, post.Header.Title)
 	}
+	mdTop += "</ul>\n"
+
+	fmt.Println(mdTop)
 
 	content := md2HTML([]byte(mdTop), renderer)
 	htmlString := concatTemplates(content)

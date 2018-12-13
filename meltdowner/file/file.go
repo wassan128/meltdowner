@@ -43,7 +43,7 @@ func CreateFile(filename string) *os.File {
 }
 func RemoveFile(filename string) {
 	if err := os.Remove(filename); err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 }
 func RemoveDir(dirname string) {

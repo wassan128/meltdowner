@@ -7,7 +7,7 @@
 	font-weight: normal;
 }
 html {
-	background: #333;
+	background: #111;
 }
 body {
 	background: #eee;
@@ -67,6 +67,14 @@ body {
 		main ul {
 			list-style-type: none;
 		}
+		main ul.top {
+		}
+			main ul.top li {
+				display: inline-block;
+				width: 100px;
+				height: 100px;
+				box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
+			}
 
 	footer {
 		font-size: 8pt;

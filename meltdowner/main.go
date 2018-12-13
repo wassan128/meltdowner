@@ -2,13 +2,21 @@ package main
 
 import (
 	"fmt"
+	"flag"
 	"net/http"
 
 	"github.com/wassan128/meltdowner/meltdowner/build"
 )
 
 func main() {
-	build.Run()
+	var (
+		genFlag = flag.Bool("g", false, "generate before serve")
+	)
+	flag.Parse()
+
+	if *genFlag {
+		build.Run()
+	}
 
 	http.Handle("/", http.FileServer(http.Dir("public")))
 
