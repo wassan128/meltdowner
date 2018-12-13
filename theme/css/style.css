@@ -19,7 +19,7 @@ body {
 		background-image: url("images/banner.jpg");
 		background-size: cover;
 		background-position: center;
-		box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.5) inset;
+		box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.3) inset;
 	}
 		header h1, header h3 {
 			color: #fff;
@@ -40,23 +40,39 @@ body {
 		header h1 {
 			font-size: 28pt;
 		}
+			header h1 a {
+				text-decoration: none;
+				color: #fff;
+			}
+			header h1 a:hover {
+				color: #ddd;
+			}
 		header h3 {
 			font-size: 12pt;
 		}
 	main {
-		background: #fff;
 		width: 80%;
-		margin: 1em auto;
-		padding: 2em;
+		margin: 0 auto;
+		padding: 1em;
 	}
 		main * {
 			padding: 0.5em 0;
+		}
+		main article {
+			width: 100%;
+			margin: 2em auto;
+			padding: 2em;
+			background: #fff;
 		}
 		main h1, main h2, main h3 {
 			color: #444;
 			border-bottom: 1px solid #ccc;
 			font-weight: bold;
-			padding: 0.5em 0 0.1em;
+			padding: 25px 0 0.1em;
+		}
+		main h1:first-child {
+			padding: 0 0 0.1em;
+			font-size: 30pt;
 		}
 
 		main pre {
@@ -75,15 +91,19 @@ body {
 		}
 			main ul.top li {
 				margin: 1em;
-				padding: 1em;
-				width: 200px;
+				padding: 1.5em;
+				width: 400px;
 				height: 200px;
 				box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
+				background: #fff;
 			}
 				main ul.top li a {
 					text-decoration: none;
 					color: #333;
-					font-size: 15pt;
+					font-size: 18pt;
+					font-weight: bold;
+					border-bottom: 1px solid #ccc;
+					display: block;
 				}
 
 	footer {
