@@ -59,9 +59,8 @@ body {
 			padding: 0.5em 0;
 		}
 		main article {
-			width: 100%;
 			margin: 2em auto;
-			padding: 2em;
+			padding: 2.5em;
 			background: #fff;
 		}
 		main h1, main h2, main h3 {
