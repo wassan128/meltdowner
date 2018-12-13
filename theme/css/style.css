@@ -3,7 +3,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-family: "Rounded Mplus 1c";
+	font-family: "Rounded Mplus 1c", "メイリオ", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: normal;
 }
 html {
@@ -60,25 +60,50 @@ body {
 		}
 		main article {
 			margin: 2em auto;
-			padding: 2.5em;
+			padding: 2em;
 			background: #fff;
 		}
+			main article * {
+				font-size: 11pt;
+				line-height: 2.5em;
+			}
 		main h1, main h2, main h3 {
 			color: #444;
 			border-bottom: 1px solid #ccc;
 			font-weight: bold;
-			padding: 25px 0 0.1em;
+			padding: 25px 0 0;
+			margin-bottom: 5px;
+		}
+		main h1 {
+			font-size: 25pt;
 		}
 		main h1:first-child {
 			padding: 0 0 0.1em;
 			font-size: 30pt;
 		}
+		main h2 {
+			font-size: 20pt;
+		}
+		main h3 {
+			font-size: 15pt;
+		}
 
+		main code, main pre {
+			font-family: "Source Code Pro";
+		}
+		main code {
+			background: #eee;
+			border-radius: 3px;
+			padding: 0.2em;
+		}
 		main pre {
 			color: #eee;
 			background: #333;
 			padding: 0.5em;
 		}
+			main pre code {
+				background: #333;
+			}
 		main ul {
 			list-style-type: none;
 		}
@@ -91,7 +116,7 @@ body {
 			main ul.top li {
 				margin: 1em;
 				padding: 1.5em;
-				width: 400px;
+				width: 80%;
 				height: 200px;
 				box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
 				background: #fff;
