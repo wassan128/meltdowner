@@ -3,9 +3,13 @@ package cmd
 import (
 	"fmt"
 	"net/http"
+	"strings"
+	"time"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 	"github.com/wassan128/meltdowner/meltdowner/build"
+	"github.com/wassan128/meltdowner/meltdowner/file"
 )
 
 type Opts struct {
@@ -55,6 +59,39 @@ var serverCmd = &cobra.Command{
 	},
 }
 
+var newCmd = &cobra.Command{
+	Use: "new",
+	Short: "Create new post",
+	Run: func(cmd *cobra.Command, args []string) {
+		title := strings.Replace(args[0], " ", "-", -1)
+		fmt.Printf("[*] create new post: %s\n", title)
+
+		nowTime := time.Now()
+		year := nowTime.Year()
+		month := nowTime.Month()
+		date := nowTime.Day()
+		dateStr := fmt.Sprintf("%d%d%d", year, month, date)
+
+		mdPaths := file.GetMarkdownPaths("source")
+		id := 1
+		for _, mdPath := range mdPaths {
+			if strings.Index(mdPath, dateStr) != -1 {
+				id++
+			}
+		}
+
+		mdPath := fmt.Sprintf("%s_%02d_%s.md", dateStr, id, title)
+		md := file.CreateFile(mdPath)
+		defer md.Close()
+
+		fmt.Fprintf(md, "title: %s\n", title)
+		fmt.Fprintf(md, "date: %d-%d-%d\n", year, month, date)
+		fmt.Fprintf(md, "---\n")
+
+		file.MoveFile(mdPath, filepath.Join("source", mdPath))
+	},
+}
+
 func init() {
 	cobra.OnInitialize()
 
@@ -62,5 +99,6 @@ func init() {
 	RootCmd.AddCommand(generateCmd)
 	RootCmd.AddCommand(serverCmd)
 	serverCmd.Flags().BoolVarP(&o.optBool, "generate", "g", false, "generate before serve")
+	RootCmd.AddCommand(newCmd)
 }
 
