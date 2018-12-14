@@ -58,8 +58,13 @@ body {
 		main * {
 			padding: 0.5em 0;
 		}
+		main p.post-date {
+			color: #777;
+			font-size: 12pt;
+			font-weight: bold;
+		}
 		main article {
-			margin: 2em auto;
+			margin: 0 auto 2em;
 			padding: 2em;
 			background: #fff;
 		}
@@ -79,7 +84,7 @@ body {
 		}
 		main h1:first-child {
 			padding: 0 0 0.1em;
-			font-size: 30pt;
+			font-size: 27pt;
 		}
 		main h2 {
 			font-size: 20pt;
@@ -117,7 +122,6 @@ body {
 				margin: 1em;
 				padding: 1.5em;
 				width: 80%;
-				height: 200px;
 				box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
 				background: #fff;
 			}
@@ -126,7 +130,6 @@ body {
 					color: #333;
 					font-size: 18pt;
 					font-weight: bold;
-					border-bottom: 1px solid #ccc;
 					display: block;
 				}
 
