@@ -80,7 +80,7 @@ var newCmd = &cobra.Command{
 			}
 		}
 
-		mdPath := fmt.Sprintf("%s_%02d_%s.md", dateStr, id, title)
+		mdPath := fmt.Sprintf("%s_%d_%s.md", dateStr, id, title)
 		md := file.CreateFile(mdPath)
 		defer md.Close()
 

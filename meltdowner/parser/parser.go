@@ -20,6 +20,7 @@ type Header struct {
 	Title string
 	Date CreatedAt
 	Tags []string
+	Id string
 }
 type Post struct {
 	Header Header
