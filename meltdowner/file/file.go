@@ -18,7 +18,7 @@ func GetMarkdownPaths(sourceDir string) []string {
 
 	var paths []string
 	for _, file := range dir {
-		paths = append(paths, filepath.Join(sourceDir, file.Name()))
+		paths = append([]string{filepath.Join(sourceDir, file.Name())}, paths...)
 	}
 
 	return paths
