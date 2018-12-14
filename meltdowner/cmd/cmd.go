@@ -29,6 +29,7 @@ var versionCmd = &cobra.Command{
 
 var generateCmd = &cobra.Command{
 	Use: "generate",
+	Aliases: []string{"g"},
 	Short: "Generate blog(htmls, static files)",
 	Run: func(cmd *cobra.Command, args []string) {
 		build.Run()
@@ -37,6 +38,7 @@ var generateCmd = &cobra.Command{
 
 var serverCmd = &cobra.Command{
 	Use: "server",
+	Aliases: []string{"s"},
 	Short: "Serve public/ on localhost",
 	Run: func(cmd *cobra.Command, args []string) {
 		if o.optBool {
