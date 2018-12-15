@@ -59,6 +59,14 @@ var serverCmd = &cobra.Command{
 	},
 }
 
+func getNowYMD() (int, int, int) {
+	nowTime := time.Now()
+	year := int(nowTime.Year())
+	month := int(nowTime.Month())
+	date := int(nowTime.Day())
+	return year, month, date
+}
+
 var newCmd = &cobra.Command{
 	Use: "new",
 	Short: "Create new post",
@@ -66,10 +74,7 @@ var newCmd = &cobra.Command{
 		title := strings.Replace(args[0], " ", "-", -1)
 		fmt.Printf("[*] create new post: %s\n", title)
 
-		nowTime := time.Now()
-		year := nowTime.Year()
-		month := nowTime.Month()
-		date := nowTime.Day()
+		year, month, date := getNowYMD()
 		dateStr := fmt.Sprintf("%d%d%d", year, month, date)
 
 		mdPaths := file.GetMarkdownPaths("source")
@@ -80,7 +85,9 @@ var newCmd = &cobra.Command{
 			}
 		}
 
-		mdPath := fmt.Sprintf("%s_%d_%s.md", dateStr, id, title)
+		postPath := fmt.Sprintf("%s_%d_%s", dateStr, id, title)
+		mdPath := fmt.Sprintf("%s.md", postPath)
+		file.CreateDir(postPath)
 		md := file.CreateFile(mdPath)
 		defer md.Close()
 
@@ -88,6 +95,7 @@ var newCmd = &cobra.Command{
 		fmt.Fprintf(md, "date: %d-%d-%d\n", year, month, date)
 		fmt.Fprintf(md, "---\n")
 
+		file.MoveFile(postPath, filepath.Join("source", postPath))
 		file.MoveFile(mdPath, filepath.Join("source", mdPath))
 	},
 }

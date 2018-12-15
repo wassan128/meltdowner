@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 	"log"
 	"path/filepath"
 
@@ -18,7 +19,9 @@ func GetMarkdownPaths(sourceDir string) []string {
 
 	var paths []string
 	for _, file := range dir {
-		paths = append([]string{filepath.Join(sourceDir, file.Name())}, paths...)
+		if strings.HasSuffix(file.Name(), ".md") {
+			paths = append([]string{filepath.Join(sourceDir, file.Name())}, paths...)
+		}
 	}
 
 	return paths
