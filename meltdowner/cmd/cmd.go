@@ -20,7 +20,12 @@ var o = &Opts{}
 var RootCmd = &cobra.Command{
 	Use: "melt",
 	Short: "CLI tool for MeltDonwer(blog generator)",
-	Run: func(cmd *cobra.Command, args []string) {},
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("melt(MeltDowner for CLI)")
+		fmt.Println("Usage: melt COMMAND [OPTION]")
+		fmt.Println("       See also `melt help` for more information.")
+		fmt.Println("Author: wassan128")
+	},
 }
 
 var versionCmd = &cobra.Command{
@@ -88,6 +93,7 @@ var newCmd = &cobra.Command{
 		postPath := fmt.Sprintf("%s_%d_%s", dateStr, id, title)
 		mdPath := fmt.Sprintf("%s.md", postPath)
 		file.CreateDir(postPath)
+
 		md := file.CreateFile(mdPath)
 		defer md.Close()
 
