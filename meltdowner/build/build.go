@@ -117,6 +117,7 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 		postPath := createPostDir("public", post.Header.Date, id)
 
 		file.MoveFile("index.html", filepath.Join(postPath, "index.html"))
+		file.CopyDir(strings.Split(mdPath, ".")[0], filepath.Join(postPath, "images"))
 		fmt.Fprintln(htmlFile, htmlString)
 		fmt.Println("[*] Done: ", postPath)
 	}
