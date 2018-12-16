@@ -60,7 +60,7 @@ body {
 		}
 		main p.post-date {
 			color: #777;
-			font-size: 12pt;
+			font-size: 14pt;
 			font-weight: bold;
 		}
 		main article {
@@ -84,7 +84,7 @@ body {
 		}
 		main h1:first-child {
 			padding: 0 0 0.1em;
-			font-size: 27pt;
+			border-bottom: 4px solid #519175;
 		}
 		main h2 {
 			font-size: 20pt;
@@ -128,7 +128,7 @@ body {
 					color: #333;
 					font-size: 18pt;
 					font-weight: bold;
-					padding: 1.5em;
+					padding: 1em;
 					background: #fff;
 					display: block;
 					border-bottom: 10px solid #519175;
@@ -137,6 +137,12 @@ body {
 				main ul.top li a:hover {
 					background: #ddd;
 				}
+					main ul.top li a span {
+						color: #666;
+						font-size: 10pt;
+						display: block;
+						line-height: 0;
+					}
 
 	footer {
 		font-size: 8pt;
