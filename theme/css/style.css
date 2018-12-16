@@ -70,7 +70,7 @@ body {
 		}
 			main article * {
 				font-size: 11pt;
-				line-height: 2.5em;
+				line-height: 2em;
 			}
 		main h1, main h2, main h3 {
 			color: #444;
@@ -120,17 +120,22 @@ body {
 		}
 			main ul.top li {
 				margin: 1em;
-				padding: 1.5em;
 				width: 80%;
 				box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
-				background: #fff;
 			}
 				main ul.top li a {
 					text-decoration: none;
 					color: #333;
 					font-size: 18pt;
 					font-weight: bold;
+					padding: 1.5em;
+					background: #fff;
 					display: block;
+					border-bottom: 10px solid #519175;
+					transition: 1s;
+				}
+				main ul.top li a:hover {
+					background: #ddd;
 				}
 
 	footer {
