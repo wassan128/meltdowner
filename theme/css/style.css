@@ -61,7 +61,7 @@ body {
 		main p.post-date {
 			color: #777;
 			font-size: 10pt;
-			border-top: 1px solid #ddd;
+			border-top: 2px dotted #ccc;
 			text-align: right;
 		}
 		main article {
