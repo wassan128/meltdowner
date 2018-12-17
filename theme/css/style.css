@@ -60,19 +60,21 @@ body {
 		}
 		main p.post-date {
 			color: #777;
-			font-size: 14pt;
-			font-weight: bold;
+			font-size: 10pt;
+			border-top: 1px solid #ddd;
+			text-align: right;
 		}
 		main article {
-			margin: 0 auto 2em;
-			padding: 2em;
+			margin: 2em auto;
+			padding: 1.5em 2em;
 			background: #fff;
+			border-bottom: 10px solid #519175;
 		}
 			main article * {
 				font-size: 11pt;
 				line-height: 2em;
 			}
-		main h1, main h2, main h3 {
+		main h1, main h2, main h3, main h4 {
 			color: #444;
 			border-bottom: 1px solid #ccc;
 			font-weight: bold;
@@ -80,17 +82,21 @@ body {
 			margin-bottom: 5px;
 		}
 		main h1 {
-			font-size: 25pt;
+			font-size: 20pt;
 		}
 		main h1:first-child {
+			font-size: 25pt;
 			padding: 0 0 0.1em;
 			border-bottom: 4px solid #519175;
 		}
 		main h2 {
-			font-size: 20pt;
+			font-size: 18pt;
 		}
 		main h3 {
-			font-size: 15pt;
+			font-size: 14pt;
+		}
+		main h4 {
+			border: none;
 		}
 
 		main code, main pre {
@@ -100,6 +106,17 @@ body {
 			background: #eee;
 			border-radius: 3px;
 			padding: 0.2em;
+		}
+		main em {
+			font-weight: bold;
+			font-style: normal;
+		}
+		main img {
+			margin: 0.3em auto;
+			padding: 0.5em;
+			max-width: 90%;
+			display: block;
+			box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
 		}
 		main pre {
 			color: #eee;
