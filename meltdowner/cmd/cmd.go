@@ -36,6 +36,13 @@ var versionCmd = &cobra.Command{
 	},
 }
 
+var initCmd = &cobra.Command{
+	Use: "init",
+	Short: "Initialize MeltDowner directory",
+	Run: func(cmd *cobra.Command, args []string) {
+	},
+}
+
 var generateCmd = &cobra.Command{
 	Use: "generate",
 	Aliases: []string{"g"},
