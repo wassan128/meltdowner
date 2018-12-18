@@ -10,6 +10,7 @@ import (
 	"github.com/wassan128/meltdowner/meltdowner/config"
 	"github.com/wassan128/meltdowner/meltdowner/file"
 	"github.com/wassan128/meltdowner/meltdowner/parser"
+	"github.com/microcosm-cc/bluemonday"
 	"gopkg.in/russross/blackfriday.v2"
 )
 
@@ -45,9 +46,16 @@ func setExtensionFlags() blackfriday.Extensions {
 
 func md2HTML(md []byte, renderer *blackfriday.HTMLRenderer) string {
 	extFlags := setExtensionFlags()
-	html := blackfriday.Run(md,
+	raw := blackfriday.Run(md,
 		blackfriday.WithExtensions(extFlags),
 		blackfriday.WithRenderer(renderer))
+	fmt.Println(string(raw))
+
+	sanitizer := bluemonday.UGCPolicy()
+	sanitizer.AllowAttrs("class").Matching(bluemonday.Paragraph).OnElements("ul")
+	html := sanitizer.SanitizeBytes(raw)
+	fmt.Println(string(html))
+
 	return string(html)
 }
 
@@ -149,7 +157,7 @@ func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
 }
 
 func reset() {
-	//file.RemoveDir("public")
+	file.RemoveDir("public")
 	file.RemoveFile("theme/template/header.html")
 	file.CreateDir("public")
 }
