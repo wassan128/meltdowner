@@ -76,10 +76,10 @@ func concatTemplates(content string) string {
 	return html
 }
 
-func createPostDir(publicDir string, createdAt parser.CreatedAt, id string) string {
-	var postPath string
+func createPostDir(createdAt parser.CreatedAt, id string) string {
+	postPath := "public"
 
-	paths := []string{publicDir, createdAt.Year, createdAt.Month, createdAt.Date, id}
+	paths := []string{createdAt.Year, createdAt.Month, createdAt.Date, id}
 	for _, path := range paths {
 		postPath = filepath.Join(postPath, path)
 		if _, err := os.Stat(postPath); err != nil {
@@ -118,7 +118,7 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 		htmlFile := file.CreateFile("index.html")
 		defer htmlFile.Close()
 
-		postPath := createPostDir("public", post.Header.Date, id)
+		postPath := createPostDir(post.Header.Date, id)
 
 		file.MoveFile("index.html", filepath.Join(postPath, "index.html"))
 		file.CopyDir(strings.Split(mdPath, ".")[0], postPath)
@@ -149,8 +149,9 @@ func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
 }
 
 func reset() {
-	file.RemoveDir("public")
+	//file.RemoveDir("public")
 	file.RemoveFile("theme/template/header.html")
+	file.CreateDir("public")
 }
 
 func Run() {

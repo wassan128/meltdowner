@@ -2,11 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 	"net/http"
 	"strings"
 	"time"
 	"path/filepath"
 
+	"gopkg.in/src-d/go-git.v4"
 	"github.com/spf13/cobra"
 	"github.com/wassan128/meltdowner/meltdowner/build"
 	"github.com/wassan128/meltdowner/meltdowner/file"
@@ -40,6 +42,17 @@ var initCmd = &cobra.Command{
 	Use: "init",
 	Short: "Initialize MeltDowner directory",
 	Run: func(cmd *cobra.Command, args []string) {
+		workDirName := string(args[0])
+		_, err := git.PlainClone(workDirName, false, &git.CloneOptions{
+			URL: "https://github.com/wassan128/meltdowner",
+			Progress: os.Stdout,
+		})
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		file.RemoveDir(filepath.Join(workDirName, ".git"))
+		file.CreateDir(filepath.Join(workDirName, "source"))
 	},
 }
 
@@ -121,5 +134,6 @@ func init() {
 	RootCmd.AddCommand(serverCmd)
 	serverCmd.Flags().BoolVarP(&o.optBool, "generate", "g", false, "generate before serve")
 	RootCmd.AddCommand(newCmd)
+	RootCmd.AddCommand(initCmd)
 }
 

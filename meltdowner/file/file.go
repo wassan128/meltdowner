@@ -33,7 +33,7 @@ func CopyDir(srcPath, dstPath string) {
 }
 func CreateDir(dirname string) {
 	if err := os.Mkdir(dirname, 0777); err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 }
 func CreateFile(filename string) *os.File {
