@@ -90,6 +90,10 @@ func createPostDir(publicDir string, createdAt parser.CreatedAt, id string) stri
 	return postPath
 }
 
+func concatRootPath(path string) string {
+	return filepath.Join(Config.Blog.RootPath, path)
+}
+
 func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Post {
 	var posts []parser.Post
 
@@ -117,7 +121,7 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 		postPath := createPostDir("public", post.Header.Date, id)
 
 		file.MoveFile("index.html", filepath.Join(postPath, "index.html"))
-		file.CopyDir(strings.Split(mdPath, ".")[0], filepath.Join(postPath, "images"))
+		file.CopyDir(strings.Split(mdPath, ".")[0], postPath)
 		fmt.Fprintln(htmlFile, htmlString)
 		fmt.Println("[*] Done: ", postPath)
 	}
@@ -128,10 +132,10 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
 	mdTop := "<ul class='top'>\n"
 	for _, post := range posts {
-		dateSpan := fmt.Sprintf("<span>%s/%s/%s</span>", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
-		mdTop += fmt.Sprintf("<li><a href='/%s/%s/%s/%s'>%s%s</a></li>\n",
-			post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date, post.Header.Id,
-			dateSpan, post.Header.Title)
+		date := fmt.Sprintf("%s/%s/%s", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
+		dateSpan := fmt.Sprintf("<span>%s</span>", date)
+		link := concatRootPath(filepath.Join(date, post.Header.Id))
+		mdTop += fmt.Sprintf("<li><a href='%s'>%s%s</a></li>\n", link, dateSpan, post.Header.Title)
 	}
 	mdTop += "</ul>\n"
 

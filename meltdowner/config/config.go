@@ -7,6 +7,7 @@ import (
 type BlogInfo struct {
 	Title string
 	SubTitle string
+	RootPath string
 	IconURL string
 	Author string
 }
