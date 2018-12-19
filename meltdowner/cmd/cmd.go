@@ -53,6 +53,7 @@ var initCmd = &cobra.Command{
 
 		file.RemoveDir(filepath.Join(workDirName, ".git"))
 		file.CreateDir(filepath.Join(workDirName, "source"))
+		file.CreateDir(filepath.Join(workDirName, "public"))
 	},
 }
 
@@ -96,6 +97,10 @@ var newCmd = &cobra.Command{
 	Use: "new",
 	Short: "Create new post",
 	Run: func(cmd *cobra.Command, args []string) {
+		if !file.IsExistPath("source") {
+			fmt.Println("[Error] source/ not found.")
+			return
+		}
 		title := strings.Replace(args[0], " ", "-", -1)
 		fmt.Printf("[*] create new post: %s\n", title)
 
@@ -126,6 +131,22 @@ var newCmd = &cobra.Command{
 	},
 }
 
+var deployCmd = &cobra.Command{
+	Use: "deploy",
+	Short: "Deploy blog",
+	Run: func(cmd *cobra.Command, args []string) {
+		if o.optBool {
+			fmt.Println("[*] found option generate before deploy.")
+			build.Run()
+		} else {
+			if !file.IsExistPath("public") {
+				fmt.Println("[Error] public/ not found.")
+				return
+			}
+		}
+	},
+}
+
 func init() {
 	cobra.OnInitialize()
 
@@ -135,5 +156,7 @@ func init() {
 	serverCmd.Flags().BoolVarP(&o.optBool, "generate", "g", false, "generate before serve")
 	RootCmd.AddCommand(newCmd)
 	RootCmd.AddCommand(initCmd)
+	RootCmd.AddCommand(deployCmd)
+	deployCmd.Flags().BoolVarP(&o.optBool, "generate", "g", false, "generate before deploy")
 }
 

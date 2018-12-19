@@ -51,7 +51,7 @@ func RemoveFile(filename string) {
 }
 func RemoveDir(dirname string) {
 	if err := os.RemoveAll(dirname); err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 }
 func LoadFileContents(filename string) []byte {

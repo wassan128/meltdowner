@@ -155,9 +155,13 @@ func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
 }
 
 func reset() {
-	file.RemoveDir("public")
+	dirs, _ := filepath.Glob("public/[0-9][0-9][0-9][0-9]")
+	for _, dir := range dirs {
+		file.RemoveDir(dir)
+	}
+	file.RemoveDir("public/css")
+	file.RemoveFile("public/index.html")
 	file.RemoveFile("theme/template/header.html")
-	file.CreateDir("public")
 }
 
 func Run() {
