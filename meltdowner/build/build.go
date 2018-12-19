@@ -49,12 +49,10 @@ func md2HTML(md []byte, renderer *blackfriday.HTMLRenderer) string {
 	raw := blackfriday.Run(md,
 		blackfriday.WithExtensions(extFlags),
 		blackfriday.WithRenderer(renderer))
-	fmt.Println(string(raw))
 
 	sanitizer := bluemonday.UGCPolicy()
 	sanitizer.AllowAttrs("class").Matching(bluemonday.Paragraph).OnElements("ul")
 	html := sanitizer.SanitizeBytes(raw)
-	fmt.Println(string(html))
 
 	return string(html)
 }
