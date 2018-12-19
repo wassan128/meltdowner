@@ -113,7 +113,7 @@ body {
 			font-style: normal;
 		}
 		main img {
-			margin: 0.3em auto;
+			margin: 1em auto;
 			padding: 0.5em;
 			max-width: 90%;
 			display: block;
@@ -128,9 +128,10 @@ body {
 				background: #333;
 			}
 		main ul {
-			list-style-type: none;
+			padding-left: 1em;
 		}
 		main ul.top {
+			list-style-type: none;
 			display: flex;
 			justify-content: space-around;
 			align-items: stretch;
