@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"github.com/spf13/cobra"
 	"github.com/wassan128/meltdowner/meltdowner/build"
 	"github.com/wassan128/meltdowner/meltdowner/file"
@@ -85,12 +86,15 @@ var serverCmd = &cobra.Command{
 	},
 }
 
-func getNowYMD() (int, int, int) {
+func getNowTime() (int, int, int, int, int, int) {
 	nowTime := time.Now()
 	year := int(nowTime.Year())
 	month := int(nowTime.Month())
 	date := int(nowTime.Day())
-	return year, month, date
+	hour := int(nowTime.Hour())
+	minute := int(nowTime.Minute())
+	second := int(nowTime.Second())
+	return year, month, date, hour, minute, second
 }
 
 var newCmd = &cobra.Command{
@@ -104,7 +108,7 @@ var newCmd = &cobra.Command{
 		title := strings.Replace(args[0], " ", "-", -1)
 		fmt.Printf("[*] create new post: %s\n", title)
 
-		year, month, date := getNowYMD()
+		year, month, date, _, _, _ := getNowTime()
 		dateStr := fmt.Sprintf("%d%d%d", year, month, date)
 
 		mdPaths := file.GetMarkdownPaths("source")
@@ -144,6 +148,30 @@ var deployCmd = &cobra.Command{
 				return
 			}
 		}
+
+		repo, err := git.PlainOpen("public")
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		worktree, err := repo.Worktree()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		worktree.Add(".")
+
+		y, m, d, h, mi, s := getNowTime()
+		dateStr := fmt.Sprintf("%d/%d/%d %d:%d:%d", y, m, d, h, mi, s)
+		cmsg := fmt.Sprintf("[update] %s", dateStr)
+		worktree.Commit(cmsg, &git.CommitOptions{
+			Author: &object.Signature{
+				Name: "wassan128",
+				Email: "wassan128@example.com",
+				When: time.Now(),
+			},
+			All: true,
+		})
 	},
 }
 
