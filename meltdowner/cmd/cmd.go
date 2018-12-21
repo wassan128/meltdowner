@@ -12,8 +12,11 @@ import (
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"github.com/spf13/cobra"
 	"github.com/wassan128/meltdowner/meltdowner/build"
+	"github.com/wassan128/meltdowner/meltdowner/config"
 	"github.com/wassan128/meltdowner/meltdowner/file"
 )
+
+var Config config.Config = config.GetConfig()
 
 type Opts struct {
 	optBool bool
@@ -164,10 +167,11 @@ var deployCmd = &cobra.Command{
 		y, m, d, h, mi, s := getNowTime()
 		dateStr := fmt.Sprintf("%d/%d/%d %d:%d:%d", y, m, d, h, mi, s)
 		cmsg := fmt.Sprintf("[update] %s", dateStr)
+
 		worktree.Commit(cmsg, &git.CommitOptions{
 			Author: &object.Signature{
-				Name: "wassan128",
-				Email: "wassan128@example.com",
+				Name: Config.GitHub.Id,
+				Email: Config.GitHub.Email,
 				When: time.Now(),
 			},
 			All: true,

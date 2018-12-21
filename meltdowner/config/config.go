@@ -12,6 +12,8 @@ type BlogInfo struct {
 	Author string
 }
 type GitHubInfo struct {
+	Id string
+	Email string
 	Repo string
 }
 type Config struct {
