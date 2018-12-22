@@ -58,11 +58,13 @@ var initCmd = &cobra.Command{
 		repo, err := git.PlainInit(filepath.Join(wd, "public"), false)
 		if err != nil {
 			fmt.Println(err)
+			return
 		}
 
 		worktree, err := repo.Worktree()
 		if err != nil {
 			fmt.Println(err)
+			return
 		}
 
 		worktree.Commit("initial commit", &git.CommitOptions{
@@ -74,11 +76,15 @@ var initCmd = &cobra.Command{
 		})
 
 		branch := plumbing.ReferenceName("refs/heads/gh-pages")
-		worktree.Checkout(&git.CheckoutOptions{
+		err = worktree.Checkout(&git.CheckoutOptions{
 			Create: true,
 			Force: false,
 			Branch: branch,
 		})
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	},
 }
 
