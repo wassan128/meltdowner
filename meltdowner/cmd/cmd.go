@@ -45,9 +45,8 @@ var initCmd = &cobra.Command{
 	Use: "init",
 	Short: "Initialize MeltDowner directory",
 	Run: func(cmd *cobra.Command, args []string) {
-		workDirName := string(args[0])
-		file.CreateDir(filepath.Join(workDirName, "source"))
-		file.CreateDir(filepath.Join(workDirName, "public"))
+		file.CreateDir("source")
+		file.CreateDir("public")
 	},
 }
 
