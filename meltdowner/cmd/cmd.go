@@ -15,6 +15,7 @@ import (
 	"github.com/wassan128/meltdowner/meltdowner/build"
 	"github.com/wassan128/meltdowner/meltdowner/config"
 	"github.com/wassan128/meltdowner/meltdowner/file"
+	"github.com/wassan128/meltdowner/meltdowner/util"
 )
 
 var Config config.Config = config.GetConfig()
@@ -51,29 +52,22 @@ var initCmd = &cobra.Command{
 		file.CreateDir("public")
 
 		wd, err := os.Getwd()
-		if err != nil {
-			fmt.Println(err)
-		}
+		util.ExitIfError(err)
 
 		repo, err := git.PlainInit(filepath.Join(wd, "public"), false)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		util.ExitIfError(err)
 
 		worktree, err := repo.Worktree()
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		util.ExitIfError(err)
 
-		worktree.Commit("initial commit", &git.CommitOptions{
+		_, err = worktree.Commit("initial commit", &git.CommitOptions{
 			Author: &object.Signature{
 				Name: Config.GitHub.Id,
 				Email: Config.GitHub.Email,
 				When: time.Now(),
 			},
 		})
+		util.ExitIfError(err)
 
 		branch := plumbing.ReferenceName("refs/heads/gh-pages")
 		err = worktree.Checkout(&git.CheckoutOptions{
@@ -81,10 +75,9 @@ var initCmd = &cobra.Command{
 			Force: false,
 			Branch: branch,
 		})
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		util.ExitIfError(err)
+
+		util.Info("Done")
 	},
 }
 
@@ -94,6 +87,8 @@ var generateCmd = &cobra.Command{
 	Short: "Generate blog(htmls, static files)",
 	Run: func(cmd *cobra.Command, args []string) {
 		build.Run()
+
+		util.Info("Done")
 	},
 }
 
@@ -103,16 +98,14 @@ var serverCmd = &cobra.Command{
 	Short: "Serve public/ on localhost",
 	Run: func(cmd *cobra.Command, args []string) {
 		if o.optBool {
-			fmt.Println("[*] found option generate before serve.")
+			util.Info("-g option found: generate before serve.")
 			build.Run()
 		}
 		http.Handle("/", http.FileServer(http.Dir("public")))
 
-		fmt.Println("[*] public/ is being served on http://localhost:5000")
-		if err := http.ListenAndServe(":5000", nil); err != nil {
-			fmt.Println(err)
-			return
-		}
+		util.Info("public/ is being served on http://localhost:5000")
+		err := http.ListenAndServe(":5000", nil)
+		util.ExitIfError(err)
 	},
 }
 
@@ -131,12 +124,8 @@ var newCmd = &cobra.Command{
 	Use: "new",
 	Short: "Create new post",
 	Run: func(cmd *cobra.Command, args []string) {
-		if !file.IsExistPath("source") {
-			fmt.Println("[Error] source/ not found.")
-			return
-		}
 		title := strings.Replace(args[0], " ", "-", -1)
-		fmt.Printf("[*] create new post: %s\n", title)
+		util.Info(fmt.Sprintf("Create new post: %s", title))
 
 		year, month, date, _, _, _ := getNowTime()
 		dateStr := fmt.Sprintf("%d%d%d", year, month, date)
@@ -162,6 +151,8 @@ var newCmd = &cobra.Command{
 
 		file.MoveFile(postPath, filepath.Join("source", postPath))
 		file.MoveFile(mdPath, filepath.Join("source", mdPath))
+
+		util.Info("Done")
 	},
 }
 
@@ -170,7 +161,7 @@ var deployCmd = &cobra.Command{
 	Short: "Deploy blog",
 	Run: func(cmd *cobra.Command, args []string) {
 		if o.optBool {
-			fmt.Println("[*] found option generate before deploy.")
+			util.Info("-g option found: generate before deploy.")
 			build.Run()
 		} else {
 			if !file.IsExistPath("public") {
@@ -180,14 +171,10 @@ var deployCmd = &cobra.Command{
 		}
 
 		repo, err := git.PlainOpen("public")
-		if err != nil {
-			fmt.Println(err)
-		}
+		util.ExitIfError(err)
 
 		worktree, err := repo.Worktree()
-		if err != nil {
-			fmt.Println(err)
-		}
+		util.ExitIfError(err)
 
 		worktree.Add(".")
 
@@ -195,7 +182,7 @@ var deployCmd = &cobra.Command{
 		dateStr := fmt.Sprintf("%d/%d/%d %d:%d:%d", y, m, d, h, mi, s)
 		cmsg := fmt.Sprintf("[update] %s", dateStr)
 
-		worktree.Commit(cmsg, &git.CommitOptions{
+		_, err = worktree.Commit(cmsg, &git.CommitOptions{
 			Author: &object.Signature{
 				Name: Config.GitHub.Id,
 				Email: Config.GitHub.Email,
@@ -203,6 +190,9 @@ var deployCmd = &cobra.Command{
 			},
 			All: true,
 		})
+		util.ExitIfError(err)
+
+		util.Info("Done")
 	},
 }
 

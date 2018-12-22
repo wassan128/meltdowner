@@ -10,6 +10,7 @@ import (
 	"github.com/wassan128/meltdowner/meltdowner/config"
 	"github.com/wassan128/meltdowner/meltdowner/file"
 	"github.com/wassan128/meltdowner/meltdowner/parser"
+	"github.com/wassan128/meltdowner/meltdowner/util"
 	"github.com/microcosm-cc/bluemonday"
 	"gopkg.in/russross/blackfriday.v2"
 )
@@ -104,7 +105,7 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 	var posts []parser.Post
 
 	for _, mdPath := range mds {
-		fmt.Println("[*] Start: ", mdPath)
+		util.Info(fmt.Sprintf("Start: %s", mdPath))
 		md := file.LoadFileContents(mdPath)
 		if md == nil {
 			fmt.Println("markdown load error")
@@ -129,7 +130,7 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 		file.MoveFile("index.html", filepath.Join(postPath, "index.html"))
 		file.CopyDir(strings.Split(mdPath, ".")[0], postPath)
 		fmt.Fprintln(htmlFile, htmlString)
-		fmt.Println("[*] Done: ", postPath)
+		util.Info(fmt.Sprintf("Done: %s", postPath))
 	}
 
 	return posts

@@ -1,16 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/wassan128/meltdowner/meltdowner/cmd"
+	"github.com/wassan128/meltdowner/meltdowner/util"
 )
 
 func main() {
-	if err := cmd.RootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(-1)
-	}
+	err := cmd.RootCmd.Execute()
+	util.ExitIfError(err)
 }
 

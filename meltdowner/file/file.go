@@ -1,21 +1,18 @@
 package file
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
-	"log"
 	"path/filepath"
 
 	"github.com/otiai10/copy"
+	"github.com/wassan128/meltdowner/meltdowner/util"
 )
 
 func GetMarkdownPaths(sourceDir string) []string {
 	dir, err := ioutil.ReadDir(sourceDir)
-	if err != nil {
-		fmt.Println(err)
-	}
+	util.ExitIfError(err)
 
 	var paths []string
 	for _, file := range dir {
@@ -27,45 +24,36 @@ func GetMarkdownPaths(sourceDir string) []string {
 	return paths
 }
 func CopyDir(srcPath, dstPath string) {
-	if err := copy.Copy(srcPath, dstPath); err != nil {
-		fmt.Println(err)
-	}
+	err := copy.Copy(srcPath, dstPath)
+	util.WarningIfError(err)
 }
 func CreateDir(dirname string) {
-	if err := os.Mkdir(dirname, 0777); err != nil {
-		fmt.Println(err)
-	}
+	err := os.Mkdir(dirname, 0777)
+	util.WarningIfError(err)
 }
 func CreateFile(filename string) *os.File {
 	file, err := os.OpenFile(filename, os.O_WRONLY | os.O_CREATE, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
+	util.WarningIfError(err)
 
 	return file
 }
 func RemoveFile(filename string) {
-	if err := os.Remove(filename); err != nil {
-		fmt.Println(err)
-	}
+	err := os.Remove(filename)
+	util.WarningIfError(err)
 }
 func RemoveDir(dirname string) {
-	if err := os.RemoveAll(dirname); err != nil {
-		fmt.Println(err)
-	}
+	err := os.RemoveAll(dirname)
+	util.WarningIfError(err)
 }
 func LoadFileContents(filename string) []byte {
 	content, err := ioutil.ReadFile(filename)
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
+	util.ExitIfError(err)
+
 	return content
 }
 func MoveFile(dstPath string, srcPath string) {
-	if err := os.Rename(dstPath, srcPath); err != nil {
-		fmt.Println(err)
-	}
+	err := os.Rename(dstPath, srcPath)
+	util.ExitIfError(err)
 }
 
 func IsExistPath(path string) bool {

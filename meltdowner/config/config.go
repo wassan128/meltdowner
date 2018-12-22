@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/BurntSushi/toml"
+	"github.com/wassan128/meltdowner/meltdowner/util"
 )
 
 type BlogInfo struct {
@@ -25,9 +26,7 @@ func GetConfig() Config {
 	var config Config
 
 	_, err := toml.DecodeFile("bigbang.toml", &config)
-	if err != nil {
-		panic(err)
-	}
+	util.ExitIfError(err)
 
 	return config
 }
