@@ -46,16 +46,6 @@ var initCmd = &cobra.Command{
 	Use: "init",
 	Short: "Initialize MeltDowner directory",
 	Run: func(cmd *cobra.Command, args []string) {
-		workDirName := string(args[0])
-		_, err := git.PlainClone(workDirName, false, &git.CloneOptions{
-			URL: "https://github.com/wassan128/meltdowner",
-			Progress: os.Stdout,
-		})
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		file.RemoveDir(filepath.Join(workDirName, ".git"))
 		file.CreateDir(filepath.Join(workDirName, "source"))
 		file.CreateDir(filepath.Join(workDirName, "public"))
 	},
