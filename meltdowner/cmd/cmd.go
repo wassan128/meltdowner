@@ -3,11 +3,13 @@ package cmd
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 	"path/filepath"
 
 	"gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing"
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"github.com/spf13/cobra"
 	"github.com/wassan128/meltdowner/meltdowner/build"
@@ -47,6 +49,36 @@ var initCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		file.CreateDir("source")
 		file.CreateDir("public")
+
+		wd, err := os.Getwd()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		repo, err := git.PlainInit(filepath.Join(wd, "public"), false)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		worktree, err := repo.Worktree()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		worktree.Commit("initial commit", &git.CommitOptions{
+			Author: &object.Signature{
+				Name: Config.GitHub.Id,
+				Email: Config.GitHub.Email,
+				When: time.Now(),
+			},
+		})
+
+		branch := plumbing.ReferenceName("refs/heads/gh-pages")
+		worktree.Checkout(&git.CheckoutOptions{
+			Create: true,
+			Force: false,
+			Branch: branch,
+		})
 	},
 }
 
