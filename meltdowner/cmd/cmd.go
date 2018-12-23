@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"gopkg.in/src-d/go-git.v4"
+	gitConfig "gopkg.in/src-d/go-git.v4/config"
 	"gopkg.in/src-d/go-git.v4/plumbing"
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 	"github.com/spf13/cobra"
@@ -60,6 +61,19 @@ var initCmd = &cobra.Command{
 		worktree, err := repo.Worktree()
 		util.ExitIfError(err)
 
+		_, err = repo.CreateRemote(&gitConfig.RemoteConfig{
+			Name: "origin",
+			URLs: []string{Config.GitHub.Repo},
+		})
+		util.ExitIfError(err)
+
+		branch := plumbing.ReferenceName("refs/heads/gh-pages")
+		err = worktree.Pull(&git.PullOptions{
+			RemoteName: "origin",
+			ReferenceName: branch,
+		})
+		util.ExitIfError(err)
+
 		_, err = worktree.Commit("initial commit", &git.CommitOptions{
 			Author: &object.Signature{
 				Name: Config.GitHub.Id,
@@ -69,7 +83,6 @@ var initCmd = &cobra.Command{
 		})
 		util.ExitIfError(err)
 
-		branch := plumbing.ReferenceName("refs/heads/gh-pages")
 		err = worktree.Checkout(&git.CheckoutOptions{
 			Create: true,
 			Force: false,
