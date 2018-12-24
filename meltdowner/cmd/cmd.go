@@ -201,6 +201,14 @@ var deployCmd = &cobra.Command{
 		worktree, err := repo.Worktree()
 		util.ExitIfError(err)
 
+		branch := plumbing.ReferenceName("refs/heads/gh-pages")
+		err = worktree.Checkout(&git.CheckoutOptions{
+			Create: true,
+			Force: false,
+			Branch: branch,
+		})
+		util.ExitIfError(err)
+
 		worktree.Add(".")
 
 		y, m, d, h, mi, s := getNowTime()
