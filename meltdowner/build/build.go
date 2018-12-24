@@ -166,9 +166,9 @@ func reset() {
 }
 
 func Run() {
-	// check `source/` and `template/` existence.
+	// check `source/` and `theme/` existence.
 	if ok := checkDirectoryExistence(); !ok {
-		fmt.Println("exit.")
+		fmt.Println("Quit build.")
 		return
 	}
 
