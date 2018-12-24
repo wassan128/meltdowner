@@ -49,8 +49,15 @@ var initCmd = &cobra.Command{
 	Use: "init",
 	Short: "Initialize MeltDowner directory",
 	Run: func(cmd *cobra.Command, args []string) {
+		if o.optBool {
+			util.Info("-r option found: reset before init.")
+			file.RemoveDir("source")
+			file.RemoveDir("public")
+			util.Info("Deleted source/ and public/ because reset option found.")
+		}
 		file.CreateDir("source")
 		file.CreateDir("public")
+		util.Info("Created source/ and public/")
 
 		wd, err := os.Getwd()
 		util.ExitIfError(err)
@@ -223,6 +230,7 @@ func init() {
 	serverCmd.Flags().BoolVarP(&o.optBool, "generate", "g", false, "generate before serve")
 	RootCmd.AddCommand(newCmd)
 	RootCmd.AddCommand(initCmd)
+	initCmd.Flags().BoolVarP(&o.optBool, "reset", "r", false, "to reset to delete public/ and source/")
 	RootCmd.AddCommand(deployCmd)
 	deployCmd.Flags().BoolVarP(&o.optBool, "generate", "g", false, "generate before deploy")
 }
