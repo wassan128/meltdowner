@@ -96,7 +96,6 @@ var initCmd = &cobra.Command{
 
 		err = worktree.Checkout(&git.CheckoutOptions{
 			Create: true,
-			Force: false,
 			Branch: branch,
 		})
 		util.ExitIfError(err)
@@ -203,8 +202,6 @@ var deployCmd = &cobra.Command{
 
 		branch := plumbing.ReferenceName("refs/heads/gh-pages")
 		err = worktree.Checkout(&git.CheckoutOptions{
-			Create: true,
-			Force: false,
 			Branch: branch,
 		})
 		util.ExitIfError(err)
