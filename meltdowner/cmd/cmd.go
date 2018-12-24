@@ -66,22 +66,26 @@ var initCmd = &cobra.Command{
 			URLs: []string{Config.GitHub.Repo},
 		})
 		util.ExitIfError(err)
+		util.Info(fmt.Sprintf("Created remote(origin->%s)", Config.GitHub.Repo))
 
 		branch := plumbing.ReferenceName("refs/heads/gh-pages")
 		err = worktree.Pull(&git.PullOptions{
 			RemoteName: "origin",
 			ReferenceName: branch,
 		})
-		util.ExitIfError(err)
-
-		_, err = worktree.Commit("initial commit", &git.CommitOptions{
-			Author: &object.Signature{
-				Name: Config.GitHub.Id,
-				Email: Config.GitHub.Email,
-				When: time.Now(),
-			},
-		})
-		util.ExitIfError(err)
+		if err != nil {
+			_, err = worktree.Commit("initial commit", &git.CommitOptions{
+				Author: &object.Signature{
+					Name: Config.GitHub.Id,
+					Email: Config.GitHub.Email,
+					When: time.Now(),
+				},
+			})
+			util.ExitIfError(err)
+			util.Info("Created initial commit")
+		} else {
+			util.Info("Pulled from remote")
+		}
 
 		err = worktree.Checkout(&git.CheckoutOptions{
 			Create: true,
@@ -89,6 +93,7 @@ var initCmd = &cobra.Command{
 			Branch: branch,
 		})
 		util.ExitIfError(err)
+		util.Info(fmt.Sprintf("Checked out to %s", branch))
 
 		util.Info("Done")
 	},
