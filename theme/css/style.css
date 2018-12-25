@@ -112,6 +112,12 @@ body {
 			font-weight: bold;
 			font-style: normal;
 		}
+		main hr {
+			border: none;
+			border-top: 1px dashed #ccc;
+			width: 60%;
+			margin: 0 auto;
+		}
 		main img {
 			margin: 1em auto;
 			padding: 0.5em;
