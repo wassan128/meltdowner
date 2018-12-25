@@ -125,7 +125,9 @@ var serverCmd = &cobra.Command{
 			util.Info("-g option found: generate before serve.")
 			build.Run()
 		}
-		http.Handle(Config.Blog.RootPath, http.FileServer(http.Dir("public")))
+		http.Handle(Config.Blog.RootPath,
+			http.StripPrefix(Config.Blog.RootPath,
+				http.FileServer(http.Dir("public"))))
 
 		util.Info("public/ is being served on http://localhost:5000")
 		err := http.ListenAndServe(":5000", nil)
