@@ -129,7 +129,7 @@ var serverCmd = &cobra.Command{
 			http.StripPrefix(Config.Blog.RootPath,
 				http.FileServer(http.Dir("public"))))
 
-		util.Info("public/ is being served on http://localhost:5000")
+		util.Info(fmt.Sprintf("public/ is being served on http://localhost:5000%s", Config.Blog.RootPath))
 		err := http.ListenAndServe(":5000", nil)
 		util.ExitIfError(err)
 	},
