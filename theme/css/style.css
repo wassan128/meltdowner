@@ -3,7 +3,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-family: "Rounded Mplus 1c", "メイリオ", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "メイリオ", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: normal;
 }
 html {
@@ -21,12 +21,13 @@ body {
 		background-position: center;
 		box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.3) inset;
 	}
-		header h1, header h3 {
+		header h1, header h1 a, header h3 {
 			color: #fff;
 			text-align: center;
 			font-family: "IPAゴシック";
 			font-weight: 300;
 			text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+			transition: 0.5s;
 		}
 		header img {
 			width: 100px;
@@ -72,13 +73,14 @@ body {
 			border-bottom: 10px solid #519175;
 		}
 			main article * {
-				font-size: 11pt;
-				line-height: 2em;
+				font-size: 10.5pt;
+				line-height: 1.7em;
 			}
 		main h1, main h2, main h3, main h4 {
 			color: #444;
 			border-bottom: 1px solid #ccc;
 			font-weight: bold;
+			font-family: "Rounded Mplus 1c";
 			padding: 25px 0 0;
 			margin-bottom: 5px;
 		}
