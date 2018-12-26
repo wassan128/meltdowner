@@ -182,52 +182,6 @@ var newCmd = &cobra.Command{
 	},
 }
 
-var deployCmd = &cobra.Command{
-	Use: "deploy",
-	Short: "Deploy blog",
-	Run: func(cmd *cobra.Command, args []string) {
-		if o.optBool {
-			util.Info("-g option found: generate before deploy.")
-			build.Run()
-		} else {
-			if !file.IsExistPath("public") {
-				fmt.Println("[Error] public/ not found.")
-				return
-			}
-		}
-
-		repo, err := git.PlainOpen("public")
-		util.ExitIfError(err)
-
-		worktree, err := repo.Worktree()
-		util.ExitIfError(err)
-
-		branch := plumbing.ReferenceName("refs/heads/gh-pages")
-		err = worktree.Checkout(&git.CheckoutOptions{
-			Branch: branch,
-		})
-		util.ExitIfError(err)
-
-		worktree.Add(".")
-
-		y, m, d, h, mi, s := getNowTime()
-		dateStr := fmt.Sprintf("%d/%d/%d %d:%d:%d", y, m, d, h, mi, s)
-		cmsg := fmt.Sprintf("[update] %s", dateStr)
-
-		_, err = worktree.Commit(cmsg, &git.CommitOptions{
-			Author: &object.Signature{
-				Name: Config.GitHub.Id,
-				Email: Config.GitHub.Email,
-				When: time.Now(),
-			},
-			All: true,
-		})
-		util.ExitIfError(err)
-
-		util.Info("Done")
-	},
-}
-
 func init() {
 	cobra.OnInitialize()
 
@@ -238,7 +192,5 @@ func init() {
 	RootCmd.AddCommand(newCmd)
 	RootCmd.AddCommand(initCmd)
 	initCmd.Flags().BoolVarP(&o.optBool, "reset", "r", false, "to reset to delete public/ and source/")
-	RootCmd.AddCommand(deployCmd)
-	deployCmd.Flags().BoolVarP(&o.optBool, "generate", "g", false, "generate before deploy")
 }
 
