@@ -2,6 +2,7 @@ package parser
 
 import (
 	"strings"
+	"strconv"
 )
 
 const (
@@ -21,6 +22,7 @@ type Header struct {
 	Date CreatedAt
 	Tags []string
 	Id string
+	Public bool
 }
 type Post struct {
 	Header Header
@@ -49,6 +51,8 @@ func ParseMarkdown(markdown []byte) *Post {
 			post.Header.Title = strings.TrimSpace(header[1])
 		case "date":
 			post.Header.Date = parseDate(strings.TrimSpace(header[1]))
+		case "public":
+			post.Header.Public, _ = strconv.ParseBool(strings.TrimSpace(header[1]))
 		}
 	}
 	cur++
