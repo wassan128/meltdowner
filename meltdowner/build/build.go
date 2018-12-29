@@ -139,8 +139,8 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
 	mdTop := "<ul class='top'>\n"
 	for _, post := range posts {
-		fmt.Printf("%s: %q\n", post.Header.Title, post.Header.Public)
 		if post.Header.Public == false {
+			util.Info(fmt.Sprintf("Found hidden flag: %s", post.Header.Title))
 			continue
 		}
 		date := fmt.Sprintf("%s/%s/%s", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
