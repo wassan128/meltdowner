@@ -51,6 +51,8 @@ func ParseMarkdown(markdown []byte) *Post {
 			post.Header.Title = strings.TrimSpace(header[1])
 		case "date":
 			post.Header.Date = parseDate(strings.TrimSpace(header[1]))
+		case "tags":
+			post.Header.Tags = strings.Split(strings.Replace(header[1], " ", "", -1), " ")
 		case "public":
 			post.Header.Public, _ = strconv.ParseBool(strings.TrimSpace(header[1]))
 		}
