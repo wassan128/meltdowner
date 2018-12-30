@@ -51,10 +51,21 @@ func parseDate(dateStr string) CreatedAt {
 	return createdAt
 }
 
+func newPost() *Post {
+	post := new(Post)
+
+	post.Header.Title = "Untitled"
+	post.Header.Date = CreatedAt{Year: "1970", Month: "01", Date: "01"}
+	post.Header.Public = true
+
+	return post
+}
+
 func ParseMarkdown(markdown []byte) *Post {
 	lines := strings.Split(string(markdown), "\n")
 
-	var post Post
+	post := newPost()
+
 	cur := 0
 	for ; lines[cur] != "---"; cur++ {
 		switch header := strings.Split(lines[cur], ":"); header[0] {
@@ -72,6 +83,6 @@ func ParseMarkdown(markdown []byte) *Post {
 
 	post.Body = []byte(strings.Join(lines[cur:], "\n"))
 
-	return &post
+	return post
 }
 
