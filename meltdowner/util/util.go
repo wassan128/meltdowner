@@ -15,7 +15,7 @@ func ExitIfError(err error) {
 }
 
 func ExitIfFalse(status bool) {
-	if status == false {
+	if status == true {
 		return
 	}
 

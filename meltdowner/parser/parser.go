@@ -3,6 +3,9 @@ package parser
 import (
 	"strings"
 	"strconv"
+	"regexp"
+
+	"github.com/wassan128/meltdowner/meltdowner/util"
 )
 
 const (
@@ -29,8 +32,16 @@ type Post struct {
 	Body []byte
 }
 
+func valiDate(pattern, date string) bool {
+	return regexp.MustCompile(pattern).Match([]byte(date))
+}
+
 func parseDate(dateStr string) CreatedAt {
 	date := strings.Split(dateStr, "-")
+
+	util.ExitIfFalse(valiDate("^\\d{4}$", date[YEAR]) &&
+		valiDate("^\\d{2}$", date[MONTH]) &&
+		valiDate("^\\d{2}$", date[DATE]))
 
 	var createdAt CreatedAt
 	createdAt.Year = date[YEAR]
@@ -52,7 +63,7 @@ func ParseMarkdown(markdown []byte) *Post {
 		case "date":
 			post.Header.Date = parseDate(strings.TrimSpace(header[1]))
 		case "tags":
-			post.Header.Tags = strings.Split(strings.Replace(header[1], " ", "", -1), " ")
+			post.Header.Tags = strings.Split(strings.Replace(header[1], " ", "", -1), ",")
 		case "public":
 			post.Header.Public, _ = strconv.ParseBool(strings.TrimSpace(header[1]))
 		}
