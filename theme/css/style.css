@@ -59,20 +59,6 @@ body {
 		main * {
 			padding: 0.5em 0;
 		}
-		main p.post-tags {
-		}
-			main p.post-tags span {
-				color: #fff;
-				background: #666;
-				border-radius: 3px;
-			}
-		main p.post-date {
-			color: #777;
-			font-size: 10pt;
-			border-top: 2px dotted #ccc;
-			margin-top: 1em;
-			text-align: right;
-		}
 		main article {
 			margin: 2em auto;
 			padding: 1.5em 2em;
@@ -83,6 +69,35 @@ body {
 				font-size: 10.5pt;
 				line-height: 1.7em;
 			}
+				main article aside {
+					margin-top: 1em;
+					padding: 0;
+					border-top: 2px dotted #ccc;
+				}
+				main article aside::after {
+					display: block;
+					content: " ";
+					clear: both;
+				}
+					main p.post-date, main p.post-tags {
+						color: #777;
+						font-size: 10pt;
+						text-align: right;
+						width: 45%;
+						padding: 0.5em 0;
+					}
+					main p.post-tags {
+						text-align: left;
+						float: left;
+					}
+					main p.post-date {
+						text-align: right;
+						float: right;
+					}
+						main p.post-tags span {
+							margin-right: 0.3em;
+							color: #519175;
+						}
 		main h1, main h2, main h3, main h4 {
 			color: #444;
 			border-bottom: 1px solid #ccc;
@@ -94,7 +109,7 @@ body {
 		main h1 {
 			font-size: 20pt;
 		}
-		main h1:first-child {
+		main h1:first-of-type {
 			font-size: 25pt;
 			padding: 0 0 0.1em;
 			border-bottom: 4px solid #519175;

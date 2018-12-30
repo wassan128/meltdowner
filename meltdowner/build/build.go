@@ -3,6 +3,7 @@ package build
 import (
 	"os"
 	"fmt"
+	"html"
 	"path/filepath"
 	"text/template"
 	"strings"
@@ -117,17 +118,23 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 		post.Header.Id = id
 		posts = append(posts, *post)
 
+		tags := ""
+		if len(post.Header.Tags) > 0 {
+			tags = "<p class='post-tags'>"
+			for _, tag := range post.Header.Tags {
+				tags += fmt.Sprintf("<span>#%s</span>", html.EscapeString(tag))
+			}
+			tags += "</p>"
+		}
+
 		title := []byte(fmt.Sprintf("# %s\n", post.Header.Title))
 		content := md2HTML(append(title, post.Body...), renderer)
 
-		tags := "<p class='post-tags'>"
-		for _, tag := range post.Header.Tags {
-			tags += fmt.Sprintf("<span>%s</span>", tag)
-		}
-		tags = fmt.Sprintf("%s</p>", tags)
-
 		date := fmt.Sprintf("<p class='post-date'>投稿日: %s/%s/%s</p>\n", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
-		htmlString := concatTemplates("<article>" + tags + content + date + "</article>")
+
+		state := "<aside>" + tags + date + "</aside>"
+
+		htmlString := concatTemplates("<article>" + content + state + "</article>")
 		htmlFile := file.CreateFile("index.html")
 		defer htmlFile.Close()
 
