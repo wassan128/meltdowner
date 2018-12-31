@@ -154,7 +154,7 @@ var newCmd = &cobra.Command{
 		util.Info(fmt.Sprintf("Create new post: %s", title))
 
 		year, month, date, _, _, _ := getNowTime()
-		dateStr := fmt.Sprintf("%d%d%d", year, month, date)
+		dateStr := fmt.Sprintf("%d%02d%02d", year, month, date)
 
 		mdPaths := file.GetMarkdownPaths("source")
 		id := 1
@@ -172,7 +172,7 @@ var newCmd = &cobra.Command{
 		defer md.Close()
 
 		fmt.Fprintf(md, "title: %s\n", title)
-		fmt.Fprintf(md, "date: %d-%d-%d\n", year, month, date)
+		fmt.Fprintf(md, "date: %d-%02d-%02d\n", year, month, date)
 		fmt.Fprintf(md, "---\n")
 
 		file.MoveFile(postPath, filepath.Join("source", postPath))

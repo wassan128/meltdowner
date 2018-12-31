@@ -76,8 +76,7 @@ func ParseMarkdown(markdown []byte) *Post {
 		case "tags":
 			post.Header.Tags = strings.Split(strings.Replace(header[1], " ", "", -1), ",")
 		case "public":
-			post.Header.Public, err = strconv.ParseBool(strings.TrimSpace(header[1]))
-			util.ExitIfError(err)
+			post.Header.Public, _ = strconv.ParseBool(strings.TrimSpace(header[1]))
 		}
 	}
 	cur++
