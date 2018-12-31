@@ -2,22 +2,29 @@
 * convert markdown to html
 * future work: blog manager for me
 
-## Directory structure
-* public/
-* source/
-	* ARTICLE\_TITLE.md
-* theme/
-	* template/
-		* header.html
-		* footer.html
-	* css/
-		* style.css
+### How to build
+* `git clone git@github.com:wassan128/meltdowner.git`
+* `go build meltdowner/main.go && mv -f main melt`
 
-### Description
-* public: converted HTMLs are placed here.
-* source: markdowns are placed here.
-	* ARTICLE\_TITLE.md: post markdown file.
-* theme: blog theme files are placed here.
-	* template: HTML header and footer for concatenate.
-	* css: style for theme.
+### How to use
+#### Initialize
+`./melt init`
+
+#### Create new post
+`./melt new "POST TITLE"`
+
+#### Write post content
+`vim source/YYYYMMDD_POST_TITLE.md`
+
+#### Start server
+`./melt server`
+
+#### Generate static content
+`./melt generate`
+
+### License
+MIT
+
+### Author
+wassan128
 
