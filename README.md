@@ -3,8 +3,8 @@
 * future work: blog manager for me
 
 ## How to build
-`git clone git@github.com:wassan128/meltdowner.git`
-`go build meltdowner/main.go && mv -f main melt`
+* `git clone git@github.com:wassan128/meltdowner.git`
+* `go build meltdowner/main.go && mv -f main melt`
 
 ## How to use
 ### Initialize
