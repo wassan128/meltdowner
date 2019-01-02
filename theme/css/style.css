@@ -1,5 +1,15 @@
 @charset "utf-8";
 
+@media screen and (max-width: 710px) {
+	main {
+		width: 80%;
+	}
+}
+@media screen and (min-width: 711px) {
+	main {
+		width: 60%;
+	}
+}
 * {
 	margin: 0;
 	padding: 0;
@@ -52,7 +62,6 @@ body {
 			font-size: 12pt;
 		}
 	main {
-		width: 80%;
 		margin: 0 auto;
 		padding: 1em;
 	}
