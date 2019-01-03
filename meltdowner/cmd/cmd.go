@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 	"path/filepath"
@@ -182,6 +183,29 @@ var newCmd = &cobra.Command{
 	},
 }
 
+var updateCmd = &cobra.Command{
+	Use: "update",
+	Short: "Update(pull & build) MeltDowner tool",
+	Run: func(cmd *cobra.Command, args []string) {
+		repo, err := git.PlainOpen(".")
+		util.ExitIfError(err)
+
+		worktree, err := repo.Worktree()
+		util.ExitIfError(err)
+
+		err = worktree.Pull(&git.PullOptions{
+			RemoteName: "origin",
+		})
+		util.WarningIfError(err)
+
+		err = exec.Command("go", "build", "meltdowner/main.go").Run()
+		util.ExitIfError(err)
+
+		err = exec.Command("mv", "-f", "main", "melt").Run()
+		util.ExitIfError(err)
+	},
+}
+
 func init() {
 	cobra.OnInitialize()
 
@@ -192,5 +216,6 @@ func init() {
 	RootCmd.AddCommand(newCmd)
 	RootCmd.AddCommand(initCmd)
 	initCmd.Flags().BoolVarP(&o.optBool, "reset", "r", false, "to reset to delete public/ and source/")
+	RootCmd.AddCommand(updateCmd)
 }
 
