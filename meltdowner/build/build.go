@@ -118,6 +118,11 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 		post.Header.Id = id
 		posts = append(posts, *post)
 
+		publicState := ""
+		if post.Header.Public == false {
+			publicState = "<span class='post-public'>URL限定公開記事</span>"
+		}
+
 		tags := ""
 		if len(post.Header.Tags) > 0 {
 			tags = "<p class='post-tags'>"
@@ -134,7 +139,7 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 
 		state := "<aside>" + tags + date + "</aside>"
 
-		htmlString := concatTemplates("<article>" + content + state + "</article>")
+		htmlString := concatTemplates("<article>" + publicState + content + state + "</article>")
 		htmlFile := file.CreateFile("index.html")
 		defer htmlFile.Close()
 

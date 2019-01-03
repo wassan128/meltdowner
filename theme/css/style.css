@@ -88,6 +88,13 @@ body {
 					content: " ";
 					clear: both;
 				}
+						main span.post-public {
+							background: #519175;
+							color: #ddd;
+							font-size: 8pt;
+							border-radius: 3px;
+							padding: 0.5em;
+						}
 					main p.post-date, main p.post-tags {
 						color: #777;
 						font-size: 10pt;
