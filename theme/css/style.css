@@ -1,14 +1,26 @@
 @charset "utf-8";
 
 @media screen and (max-width: 710px) {
-	main {
-		width: 80%;
+	header h1 {
+		font-size: 18pt;
 	}
+	main {
+		width: 90%;
+	}
+		main ul.top li {
+			width: 100%;
+		}
 }
 @media screen and (min-width: 711px) {
+	header h1 {
+		font-size: 28pt;
+	}
 	main {
 		width: 60%;
 	}
+		main ul.top li {
+			width: 80%;
+		}
 }
 * {
 	margin: 0;
@@ -47,9 +59,6 @@ body {
 			margin: 0 auto;
 			padding: 10px;
 			border: 3px solid #fff;
-		}
-		header h1 {
-			font-size: 28pt;
 		}
 			header h1 a {
 				text-decoration: none;
@@ -173,9 +182,6 @@ body {
 			main pre code {
 				background: #333;
 			}
-		main ul {
-			padding-left: 1.5em;
-		}
 		main ul.top {
 			list-style-type: none;
 			display: flex;
@@ -185,7 +191,6 @@ body {
 		}
 			main ul.top li {
 				margin: 1em;
-				width: 80%;
 				box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
 			}
 				main ul.top li a {
