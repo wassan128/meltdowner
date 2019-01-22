@@ -57,6 +57,7 @@ func md2HTML(md []byte, renderer *ChromaRenderer) string {
 
 	sanitizer := bluemonday.UGCPolicy()
 	sanitizer.AllowAttrs("class").Matching(bluemonday.Paragraph).OnElements("ul")
+	sanitizer.AllowAttrs("style").Globally()
 	html := sanitizer.SanitizeBytes(raw)
 
 	return string(html)

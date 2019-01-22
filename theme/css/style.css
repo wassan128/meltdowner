@@ -149,7 +149,7 @@ body {
 			border: none;
 		}
 
-		main code, main pre {
+		main code, main pre, main pre * {
 			font-family: "Source Code Pro";
 		}
 		main code {
@@ -175,13 +175,10 @@ body {
 			box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
 		}
 		main pre {
-			color: #eee;
-			background: #333;
-			padding: 0.5em;
+			border-radius: 3px;
+			margin: 0.5em 0;
+			padding: 1em;
 		}
-			main pre code {
-				background: #333;
-			}
 		main ul.top {
 			list-style-type: none;
 			display: flex;
