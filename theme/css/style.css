@@ -149,7 +149,7 @@ body {
 			border: none;
 		}
 
-		main code, main pre, main pre * {
+		main code, main pre, main pre span {
 			font-family: "Source Code Pro";
 		}
 		main code {
