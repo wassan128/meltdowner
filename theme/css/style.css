@@ -149,6 +149,12 @@ body {
 			border: none;
 		}
 
+		main blockquote {
+			background: #eee;
+			padding: 1em;
+			font-size: 125%;
+			font-style: italic;
+		}
 		main code, main pre, main pre span {
 			font-family: "Source Code Pro";
 		}
