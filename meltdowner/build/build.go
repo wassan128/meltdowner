@@ -27,13 +27,16 @@ func setHTMLFlags() blackfriday.HTMLFlags {
 	return htmlFlags
 }
 
-func getRenderer() *blackfriday.HTMLRenderer {
+func getRenderer() *ChromaRenderer {
 	htmlFlags := setHTMLFlags()
-	return blackfriday.NewHTMLRenderer(
-		blackfriday.HTMLRendererParameters{
-			Flags: htmlFlags,
-		},
-	)
+	return &ChromaRenderer{
+		html: blackfriday.NewHTMLRenderer(
+				blackfriday.HTMLRendererParameters{
+					Flags: htmlFlags,
+				},
+			),
+		theme: "paraiso-dark",
+	}
 }
 
 func setExtensionFlags() blackfriday.Extensions {
@@ -46,7 +49,7 @@ func setExtensionFlags() blackfriday.Extensions {
 	return extFlags
 }
 
-func md2HTML(md []byte, renderer *blackfriday.HTMLRenderer) string {
+func md2HTML(md []byte, renderer *ChromaRenderer) string {
 	extFlags := setExtensionFlags()
 	raw := blackfriday.Run(md,
 		blackfriday.WithExtensions(extFlags),
@@ -102,7 +105,7 @@ func concatRootPath(path string) string {
 	return filepath.Join(Config.Blog.RootPath, path)
 }
 
-func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Post {
+func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 	var posts []parser.Post
 
 	for _, mdPath := range mds {
@@ -154,7 +157,7 @@ func generatePosts(renderer *blackfriday.HTMLRenderer, mds []string) []parser.Po
 	return posts
 }
 
-func generateTopPage(renderer *blackfriday.HTMLRenderer, posts []parser.Post) {
+func generateTopPage(renderer *ChromaRenderer, posts []parser.Post) {
 	mdTop := "<ul class='top'>\n"
 	for _, post := range posts {
 		if post.Header.Public == false {
