@@ -178,6 +178,7 @@ body {
 			border-radius: 3px;
 			margin: 0.5em 0;
 			padding: 1em;
+			overflow: auto;
 		}
 		main ul.top {
 			list-style-type: none;
