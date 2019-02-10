@@ -4,7 +4,7 @@
 
 ## How to build
 * `git clone git@github.com:wassan128/meltdowner.git`
-* `go build meltdowner/main.go && mv -f main melt`
+* `go build -o melt meltdowner/main.go`
 
 ## How to use
 ### Initialize
