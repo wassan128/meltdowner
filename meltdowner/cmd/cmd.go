@@ -174,6 +174,7 @@ var newCmd = &cobra.Command{
 
 		fmt.Fprintf(md, "title: %s\n", title)
 		fmt.Fprintf(md, "date: %d-%02d-%02d\n", year, month, date)
+		fmt.Fprintf(md, "tags:\n")
 		fmt.Fprintf(md, "---\n")
 
 		file.MoveFile(postPath, filepath.Join("source", postPath))
