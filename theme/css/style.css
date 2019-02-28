@@ -119,7 +119,8 @@ body {
 						text-align: right;
 						float: right;
 					}
-						main p.post-tags span {
+						main p.post-tags a {
+							text-decoration: none;
 							margin-right: 0.3em;
 							color: #519175;
 						}
