@@ -132,7 +132,7 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 		if len(post.Header.Tags) > 0 {
 			tags = "<p class='post-tags'>"
 			for _, tag := range post.Header.Tags {
-				tags += fmt.Sprintf("<span><a href='#'>#%s</a></span>", html.EscapeString(tag))
+				tags += fmt.Sprintf("<a href='#'>#%s</a>", html.EscapeString(tag))
 			}
 			tags += "</p>"
 		}
