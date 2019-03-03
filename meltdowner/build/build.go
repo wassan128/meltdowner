@@ -104,12 +104,12 @@ func createPostDir(createdAt parser.CreatedAt, id string) string {
 }
 
 func createTagDir(tagName string) string {
-    tagPath := filepath.Join("public", tagName)
-    if _, err := os.Stat(tagPath); err != nil {
-        file.CreateDir(tagPath)
-    }
+	tagPath := filepath.Join("public", tagName)
+	if _, err := os.Stat(tagPath); err != nil {
+		file.CreateDir(tagPath)
+	}
 
-    return tagPath
+	return tagPath
 }
 
 func concatRootPath(path string) string {
@@ -139,9 +139,12 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 
 		tags := ""
 		if len(post.Header.Tags) > 0 {
+			tagPaths := []string{}
 			tags = "<p class='post-tags'>"
 			for _, tag := range post.Header.Tags {
 				tags += fmt.Sprintf("<a href='#'>#%s</a>", html.EscapeString(tag))
+				tagPath := createTagDir(tag)
+				tagPaths = append(tagPaths, tagPath)
 			}
 			tags += "</p>"
 		}
