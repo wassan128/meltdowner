@@ -103,6 +103,15 @@ func createPostDir(createdAt parser.CreatedAt, id string) string {
 	return postPath
 }
 
+func createTagDir(tagName string) string {
+    tagPath := filepath.Join("public", tagName)
+    if _, err := os.Stat(tagPath); err != nil {
+        file.CreateDir(tagPath)
+    }
+
+    return tagPath
+}
+
 func concatRootPath(path string) string {
 	return filepath.Join(Config.Blog.RootPath, path)
 }
