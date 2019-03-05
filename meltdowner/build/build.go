@@ -138,8 +138,8 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 		}
 
 		tags := ""
+        tagPaths := []string{}
 		if len(post.Header.Tags) > 0 {
-			tagPaths := []string{}
 			tags = "<p class='post-tags'>"
 			for _, tag := range post.Header.Tags {
 				tags += fmt.Sprintf("<a href='#'>#%s</a>", html.EscapeString(tag))
@@ -166,6 +166,13 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 		file.CopyDir(strings.Split(mdPath, ".")[0], postPath)
 		fmt.Fprintln(htmlFile, htmlString)
 		util.Info(fmt.Sprintf("Done: %s", postPath))
+
+        for _, tagPath := range tagPaths {
+            file.MoveFile("index.html", filepath.Join(tagPath, "index.html"))
+            file.CopyDir(strings.Split(mdPath, ".")[0], tagPath)
+            fmt.Fprintln(htmlFile, htmlString)
+            util.Info(fmt.Sprintf("Done: %s", tagPath))
+        }
 	}
 
 	return posts
