@@ -143,8 +143,7 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 			tags = "<p class='post-tags'>"
 			for _, tag := range post.Header.Tags {
 				tags += fmt.Sprintf("<a href='#'>#%s</a>", html.EscapeString(tag))
-				tagPath := createTagDir(tag)
-				tagPaths = append(tagPaths, tagPath)
+				tagPaths = append(tagPaths, tag)
 			}
 			tags += "</p>"
 		}
@@ -166,13 +165,6 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 		file.CopyDir(strings.Split(mdPath, ".")[0], postPath)
 		fmt.Fprintln(htmlFile, htmlString)
 		util.Info(fmt.Sprintf("Done: %s", postPath))
-
-		for _, tagPath := range tagPaths {
-			file.MoveFile("index.html", filepath.Join(tagPath, "index.html"))
-			file.CopyDir(strings.Split(mdPath, ".")[0], tagPath)
-			fmt.Fprintln(htmlFile, htmlString)
-			util.Info(fmt.Sprintf("Done: %s", tagPath))
-		}
 	}
 
 	return posts
@@ -201,6 +193,17 @@ func generateTopPage(renderer *ChromaRenderer, posts []parser.Post) {
 	fmt.Fprintln(htmlFile, htmlString)
 }
 
+func generateTagTopPage(renderer *ChromaRenderer, posts []parser.Post) {
+	for _, post := range posts {
+		if post.Header.Public == false {
+			util.Info(fmt.Sprintf("Found hidden flag: %s", post.Header.Title))
+			continue
+		}
+		if len(post.Header.Tags) > 0 {
+		}
+	}
+}
+
 func reset() {
 	dirs, _ := filepath.Glob("public/[0-9][0-9][0-9][0-9]")
 	for _, dir := range dirs {
@@ -225,6 +228,7 @@ func Run() {
 
 	posts := generatePosts(renderer, mds)
 	generateTopPage(renderer, posts)
+	generateTagTopPage(renderer, posts)
 
 	file.CopyDir("theme/css", "public/css")
 }
