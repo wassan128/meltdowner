@@ -137,13 +137,13 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 			publicState = "<span class='post-public'>URL限定公開記事</span>"
 		}
 
+
 		tags := ""
-		tagPaths := []string{}
 		if len(post.Header.Tags) > 0 {
 			tags = "<p class='post-tags'>"
 			for _, tag := range post.Header.Tags {
 				tags += fmt.Sprintf("<a href='#'>#%s</a>", html.EscapeString(tag))
-				tagPaths = append(tagPaths, tag)
+				generateTagTopPage(renderer, post, tag)
 			}
 			tags += "</p>"
 		}
@@ -188,20 +188,27 @@ func generateTopPage(renderer *ChromaRenderer, posts []parser.Post) {
 	htmlString := concatTemplates(content)
 	htmlFile := file.CreateFile("index.html")
 	defer htmlFile.Close()
-
 	file.MoveFile("index.html", "public/index.html")
 	fmt.Fprintln(htmlFile, htmlString)
 }
 
-func generateTagTopPage(renderer *ChromaRenderer, posts []parser.Post) {
-	for _, post := range posts {
-		if post.Header.Public == false {
-			util.Info(fmt.Sprintf("Found hidden flag: %s", post.Header.Title))
-			continue
-		}
-		if len(post.Header.Tags) > 0 {
-		}
-	}
+func generateTagTopPage(renderer *ChromaRenderer, post *parser.Post, tag string) {
+	tagPath := createTagDir(tag)
+
+	mdTagTop := "<ul class='top'>\n"
+	date := fmt.Sprintf("%s/%s/%s", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
+	dateSpan := fmt.Sprintf("<span>%s</span>", date)
+	link := concatRootPath(filepath.Join(date, post.Header.Id))
+	mdTagTop += fmt.Sprintf("<li><a href='%s'>%s%s</a></li>\n", link, dateSpan, post.Header.Title)
+	 mdTagTop += "</ul>\n"
+
+	content := md2HTML([]byte(mdTagTop), renderer)
+	htmlString := concatTemplates(content)
+	htmlFile := file.CreateFile("index.html")
+	defer htmlFile.Close()
+
+	file.MoveFile("index.html", filepath.Join(tagPath, "ndex.html"))
+	fmt.Fprintln(htmlFile, htmlString)
 }
 
 func reset() {
@@ -228,7 +235,6 @@ func Run() {
 
 	posts := generatePosts(renderer, mds)
 	generateTopPage(renderer, posts)
-	generateTagTopPage(renderer, posts)
 
 	file.CopyDir("theme/css", "public/css")
 }
