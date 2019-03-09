@@ -58,6 +58,7 @@ var initCmd = &cobra.Command{
 		}
 		file.CreateDir("source")
 		file.CreateDir("public")
+		file.CreateDir("public/tags")
 		util.Info("Created source/ and public/")
 
 		wd, err := os.Getwd()

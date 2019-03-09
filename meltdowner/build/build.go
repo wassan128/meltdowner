@@ -104,7 +104,7 @@ func createPostDir(createdAt parser.CreatedAt, id string) string {
 }
 
 func createTagDir(tagName string) string {
-	tagPath := filepath.Join("public", tagName)
+	tagPath := filepath.Join("public/tags", tagName)
 	if _, err := os.Stat(tagPath); err != nil {
 		file.CreateDir(tagPath)
 	}
