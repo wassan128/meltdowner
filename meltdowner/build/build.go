@@ -207,7 +207,7 @@ func generateTagTopPage(renderer *ChromaRenderer, post *parser.Post, tag string)
 	htmlFile := file.CreateFile("index.html")
 	defer htmlFile.Close()
 
-	file.MoveFile("index.html", filepath.Join(tagPath, "ndex.html"))
+	file.MoveFile("index.html", filepath.Join(tagPath, "index.html"))
 	fmt.Fprintln(htmlFile, htmlString)
 }
 
