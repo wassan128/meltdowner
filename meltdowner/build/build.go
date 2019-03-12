@@ -137,12 +137,11 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 			publicState = "<span class='post-public'>URL限定公開記事</span>"
 		}
 
-
 		tags := ""
 		if len(post.Header.Tags) > 0 {
 			tags = "<p class='post-tags'>"
 			for _, tag := range post.Header.Tags {
-				tags += fmt.Sprintf("<a href='#'>#%s</a>", html.EscapeString(tag))
+				tags += fmt.Sprintf("<a href='/tags/%s'>#%s</a>", html.EscapeString(tag), html.EscapeString(tag))
 				generateTagTopPage(renderer, post, tag)
 			}
 			tags += "</p>"
