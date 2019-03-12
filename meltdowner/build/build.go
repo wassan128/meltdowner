@@ -199,7 +199,7 @@ func generateTagTopPage(renderer *ChromaRenderer, post *parser.Post, tag string)
 	dateSpan := fmt.Sprintf("<span>%s</span>", date)
 	link := concatRootPath(filepath.Join(date, post.Header.Id))
 	mdTagTop += fmt.Sprintf("<li><a href='%s'>%s%s</a></li>\n", link, dateSpan, post.Header.Title)
-	 mdTagTop += "</ul>\n"
+	mdTagTop += "</ul>\n"
 
 	content := md2HTML([]byte(mdTagTop), renderer)
 	htmlString := concatTemplates(content)
