@@ -137,15 +137,15 @@ var serverCmd = &cobra.Command{
     },
 }
 
-func getNowTime() (int, int, int, int, int, int) {
+func getNowTime() (year, month, date, hour, minute, second int) {
     nowTime := time.Now()
-    year := int(nowTime.Year())
-    month := int(nowTime.Month())
-    date := int(nowTime.Day())
-    hour := int(nowTime.Hour())
-    minute := int(nowTime.Minute())
-    second := int(nowTime.Second())
-    return year, month, date, hour, minute, second
+    year = int(nowTime.Year())
+    month = int(nowTime.Month())
+    date = int(nowTime.Day())
+    hour = int(nowTime.Hour())
+    minute = int(nowTime.Minute())
+    second = int(nowTime.Second())
+    return
 }
 
 var newCmd = &cobra.Command{
