@@ -116,15 +116,14 @@ func concatRootPath(path string) string {
     return filepath.Join(Config.Blog.RootPath, path)
 }
 
-func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
-    var posts []parser.Post
-
+func generatePosts(renderer *ChromaRenderer, mds []string) (posts []parser.Post, tagMap map[string][]*parser.Post) {
+    tagMap = map[string][]*parser.Post{}
     for _, mdPath := range mds {
         util.Info(fmt.Sprintf("Start: %s", mdPath))
         md := file.LoadFileContents(mdPath)
         if md == nil {
             fmt.Println("markdown load error")
-            return nil
+            return nil, nil
         }
 
         id := strings.Split(mdPath, "_")[1]
@@ -137,7 +136,6 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
             publicState = "<span class='post-public'>URL限定公開記事</span>"
         }
 
-        tagMap := map[string][]*parser.Post{}
         tags := ""
         if len(post.Header.Tags) > 0 {
             tags = "<p class='post-tags'>"
@@ -147,14 +145,6 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
             }
             tags += "</p>"
         }
-
-        /* START debug code */
-        for _, post := range tagMap {
-            for _, p := range post {
-                fmt.Printf("%+v\n", p.Header.Tags)
-            }
-        }
-        /* END debug code */
 
         title := []byte(fmt.Sprintf("# %s\n", post.Header.Title))
         content := md2HTML(append(title, post.Body...), renderer)
@@ -175,7 +165,7 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
         util.Info(fmt.Sprintf("Done: %s", postPath))
     }
 
-    return posts
+    return posts, tagMap
 }
 
 func generateTopPage(renderer *ChromaRenderer, posts []parser.Post) {
@@ -200,23 +190,27 @@ func generateTopPage(renderer *ChromaRenderer, posts []parser.Post) {
     fmt.Fprintln(htmlFile, htmlString)
 }
 
-func generateTagTopPage(renderer *ChromaRenderer, post *parser.Post, tag string) {
-    tagPath := createTagDir(tag)
+func generateTagTopPage(renderer *ChromaRenderer, tagMap map[string][]*parser.Post) {
+    for tag, posts := range tagMap {
+        tagPath := createTagDir(tag)
 
-    mdTagTop := "<ul class='top'>\n"
-    date := fmt.Sprintf("%s/%s/%s", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
-    dateSpan := fmt.Sprintf("<span>%s</span>", date)
-    link := concatRootPath(filepath.Join(date, post.Header.Id))
-    mdTagTop += fmt.Sprintf("<li><a href='%s'>%s%s</a></li>\n", link, dateSpan, post.Header.Title)
-    mdTagTop += "</ul>\n"
+        mdTagTop := "<ul class='top'>\n"
+        for _, post := range posts {
+            date := fmt.Sprintf("%s/%s/%s", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
+            dateSpan := fmt.Sprintf("<span>%s</span>", date)
+            link := concatRootPath(filepath.Join(date, post.Header.Id))
+            mdTagTop += fmt.Sprintf("<li><a href='%s'>%s%s</a></li>\n", link, dateSpan, post.Header.Title)
+        }
+        mdTagTop += "</ul>\n"
 
-    content := md2HTML([]byte(mdTagTop), renderer)
-    htmlString := concatTemplates(content)
-    htmlFile := file.CreateFile("index.html")
-    defer htmlFile.Close()
+        content := md2HTML([]byte(mdTagTop), renderer)
+        htmlString := concatTemplates(content)
+        htmlFile := file.CreateFile("index.html")
+        defer htmlFile.Close()
 
-    file.MoveFile("index.html", filepath.Join(tagPath, "index.html"))
-    fmt.Fprintln(htmlFile, htmlString)
+        file.MoveFile("index.html", filepath.Join(tagPath, "index.html"))
+        fmt.Fprintln(htmlFile, htmlString)
+    }
 }
 
 func reset() {
@@ -225,6 +219,7 @@ func reset() {
         file.RemoveDir(dir)
     }
     file.RemoveDir("public/css")
+    file.RemoveDir("public/tags/*")
     file.RemoveFile("public/index.html")
     file.RemoveFile("theme/template/header.html")
 }
@@ -241,8 +236,9 @@ func Run() {
     renderer := getRenderer()
     mds := file.GetMarkdownPaths("source")
 
-    posts := generatePosts(renderer, mds)
+    posts, tagMap := generatePosts(renderer, mds)
     generateTopPage(renderer, posts)
+    generateTagTopPage(renderer, tagMap)
 
     file.CopyDir("theme/css", "public/css")
 }
