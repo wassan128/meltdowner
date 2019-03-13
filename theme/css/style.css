@@ -1,228 +1,228 @@
 @charset "utf-8";
 
 @media screen and (max-width: 710px) {
-	header h1 {
-		font-size: 18pt;
-	}
-	main {
-		width: 90%;
-	}
-		main ul.top li {
-			width: 100%;
-		}
+    header h1 {
+        font-size: 18pt;
+    }
+    main {
+        width: 90%;
+    }
+        main ul.top li {
+            width: 100%;
+        }
 }
 @media screen and (min-width: 711px) {
-	header h1 {
-		font-size: 28pt;
-	}
-	main {
-		width: 60%;
-	}
-		main ul.top li {
-			width: 80%;
-		}
+    header h1 {
+        font-size: 28pt;
+    }
+    main {
+        width: 60%;
+    }
+        main ul.top li {
+            width: 80%;
+        }
 }
 * {
-	margin: 0;
-	padding: 0;
-	font-family: "メイリオ", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: normal;
+    margin: 0;
+    padding: 0;
+    font-family: "メイリオ", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
 }
 html {
-	background: #111;
+    background: #111;
 }
 body {
-	background: #eee;
-	background: url("images/wood_ptn.png");
+    background: #eee;
+    background: url("images/wood_ptn.png");
 }
-	header {
-		padding: 50px;
-		background-color: #333;
-		background-image: url("images/banner.jpg");
-		background-size: cover;
-		background-position: center;
-		box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.3) inset;
-	}
-		header h1, header h1 a, header h3 {
-			color: #fff;
-			text-align: center;
-			font-family: "IPAゴシック";
-			font-weight: 300;
-			text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-			transition: 0.5s;
-		}
-		header img {
-			width: 100px;
-			height: 100px;
-			border-radius: 50%;
-			display: block;
-			margin: 0 auto;
-			padding: 10px;
-			border: 3px solid #fff;
-		}
-			header h1 a {
-				text-decoration: none;
-				color: #fff;
-			}
-			header h1 a:hover {
-				color: #ddd;
-			}
-		header h3 {
-			font-size: 12pt;
-		}
-	main {
-		margin: 0 auto;
-		padding: 1em;
-	}
-		main * {
-			padding: 0.5em 0;
-		}
-		main article {
-			margin: 2em auto;
-			padding: 1.5em 2em;
-			background: #fff;
-			border-bottom: 10px solid #519175;
-		}
-			main article * {
-				font-size: 10.5pt;
-				line-height: 1.7em;
-			}
-				main article aside {
-					margin-top: 1em;
-					padding: 0;
-					border-top: 2px dotted #ccc;
-				}
-				main article aside::after {
-					display: block;
-					content: " ";
-					clear: both;
-				}
-						main span.post-public {
-							background: #519175;
-							color: #ddd;
-							font-size: 8pt;
-							border-radius: 3px;
-							padding: 0.5em;
-						}
-					main p.post-date, main p.post-tags {
-						color: #777;
-						font-size: 10pt;
-						text-align: right;
-						width: 45%;
-						padding: 0.5em 0;
-					}
-					main p.post-tags {
-						text-align: left;
-						float: left;
-					}
-					main p.post-date {
-						text-align: right;
-						float: right;
-					}
-						main p.post-tags a {
-							text-decoration: none;
-							margin-right: 0.3em;
-							color: #519175;
-						}
-		main h1, main h2, main h3, main h4 {
-			color: #444;
-			border-bottom: 1px solid #ccc;
-			font-weight: bold;
-			font-family: "Rounded Mplus 1c";
-			padding: 25px 0 0;
-			margin-bottom: 5px;
-		}
-		main h1 {
-			font-size: 20pt;
-		}
-		main h1:first-of-type {
-			font-size: 25pt;
-			padding: 0 0 0.1em;
-			border-bottom: 4px solid #519175;
-		}
-		main h2 {
-			font-size: 18pt;
-		}
-		main h3 {
-			font-size: 14pt;
-		}
-		main h4 {
-			border: none;
-		}
+    header {
+        padding: 50px;
+        background-color: #333;
+        background-image: url("images/banner.jpg");
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.3) inset;
+    }
+        header h1, header h1 a, header h3 {
+            color: #fff;
+            text-align: center;
+            font-family: "IPAゴシック";
+            font-weight: 300;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            transition: 0.5s;
+        }
+        header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+            padding: 10px;
+            border: 3px solid #fff;
+        }
+            header h1 a {
+                text-decoration: none;
+                color: #fff;
+            }
+            header h1 a:hover {
+                color: #ddd;
+            }
+        header h3 {
+            font-size: 12pt;
+        }
+    main {
+        margin: 0 auto;
+        padding: 1em;
+    }
+        main * {
+            padding: 0.5em 0;
+        }
+        main article {
+            margin: 2em auto;
+            padding: 1.5em 2em;
+            background: #fff;
+            border-bottom: 10px solid #519175;
+        }
+            main article * {
+                font-size: 10.5pt;
+                line-height: 1.7em;
+            }
+                main article aside {
+                    margin-top: 1em;
+                    padding: 0;
+                    border-top: 2px dotted #ccc;
+                }
+                main article aside::after {
+                    display: block;
+                    content: " ";
+                    clear: both;
+                }
+                        main span.post-public {
+                            background: #519175;
+                            color: #ddd;
+                            font-size: 8pt;
+                            border-radius: 3px;
+                            padding: 0.5em;
+                        }
+                    main p.post-date, main p.post-tags {
+                        color: #777;
+                        font-size: 10pt;
+                        text-align: right;
+                        width: 45%;
+                        padding: 0.5em 0;
+                    }
+                    main p.post-tags {
+                        text-align: left;
+                        float: left;
+                    }
+                    main p.post-date {
+                        text-align: right;
+                        float: right;
+                    }
+                        main p.post-tags a {
+                            text-decoration: none;
+                            margin-right: 0.3em;
+                            color: #519175;
+                        }
+        main h1, main h2, main h3, main h4 {
+            color: #444;
+            border-bottom: 1px solid #ccc;
+            font-weight: bold;
+            font-family: "Rounded Mplus 1c";
+            padding: 25px 0 0;
+            margin-bottom: 5px;
+        }
+        main h1 {
+            font-size: 20pt;
+        }
+        main h1:first-of-type {
+            font-size: 25pt;
+            padding: 0 0 0.1em;
+            border-bottom: 4px solid #519175;
+        }
+        main h2 {
+            font-size: 18pt;
+        }
+        main h3 {
+            font-size: 14pt;
+        }
+        main h4 {
+            border: none;
+        }
 
-		main blockquote {
-			background: #eee;
-			padding: 1em;
-			font-size: 125%;
-			font-style: italic;
-		}
-		main code, main pre, main pre span {
-			font-family: "Source Code Pro";
-		}
-		main code {
-			background: #eee;
-			border-radius: 3px;
-			padding: 0.2em;
-		}
-		main em {
-			font-weight: bold;
-			font-style: normal;
-		}
-		main hr {
-			border: none;
-			border-top: 1px dashed #ccc;
-			width: 60%;
-			margin: 0 auto;
-		}
-		main img {
-			margin: 1em auto;
-			padding: 0.5em;
-			max-width: 90%;
-			display: block;
-			box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
-		}
-		main pre {
-			border-radius: 3px;
-			margin: 0.5em 0;
-			padding: 1em;
-			overflow: auto;
-		}
-		main ul.top {
-			list-style-type: none;
-			display: flex;
-			justify-content: space-around;
-			align-items: stretch;
-			flex-wrap: wrap;
-		}
-			main ul.top li {
-				margin: 1em;
-				box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
-			}
-				main ul.top li a {
-					text-decoration: none;
-					color: #333;
-					font-size: 18pt;
-					font-weight: bold;
-					padding: 1em;
-					background: #fff;
-					display: block;
-					border-bottom: 10px solid #519175;
-					transition: 1s;
-				}
-				main ul.top li a:hover {
-					background: #ddd;
-				}
-					main ul.top li a span {
-						color: #666;
-						font-size: 10pt;
-						display: block;
-						line-height: 0;
-					}
+        main blockquote {
+            background: #eee;
+            padding: 1em;
+            font-size: 125%;
+            font-style: italic;
+        }
+        main code, main pre, main pre span {
+            font-family: "Source Code Pro";
+        }
+        main code {
+            background: #eee;
+            border-radius: 3px;
+            padding: 0.2em;
+        }
+        main em {
+            font-weight: bold;
+            font-style: normal;
+        }
+        main hr {
+            border: none;
+            border-top: 1px dashed #ccc;
+            width: 60%;
+            margin: 0 auto;
+        }
+        main img {
+            margin: 1em auto;
+            padding: 0.5em;
+            max-width: 90%;
+            display: block;
+            box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
+        }
+        main pre {
+            border-radius: 3px;
+            margin: 0.5em 0;
+            padding: 1em;
+            overflow: auto;
+        }
+        main ul.top {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+            main ul.top li {
+                margin: 1em;
+                box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
+            }
+                main ul.top li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 18pt;
+                    font-weight: bold;
+                    padding: 1em;
+                    background: #fff;
+                    display: block;
+                    border-bottom: 10px solid #519175;
+                    transition: 1s;
+                }
+                main ul.top li a:hover {
+                    background: #ddd;
+                }
+                    main ul.top li a span {
+                        color: #666;
+                        font-size: 10pt;
+                        display: block;
+                        line-height: 0;
+                    }
 
-	footer {
-		font-size: 8pt;
-		color: #eee;
-		background: #111;
-		padding: 1em;
-		text-align: center;
-	}
+    footer {
+        font-size: 8pt;
+        color: #eee;
+        background: #111;
+        padding: 1em;
+        text-align: center;
+    }
