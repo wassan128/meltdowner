@@ -137,15 +137,24 @@ func generatePosts(renderer *ChromaRenderer, mds []string) []parser.Post {
 			publicState = "<span class='post-public'>URL限定公開記事</span>"
 		}
 
+		tagMap := map[string][]*parser.Post{}
 		tags := ""
 		if len(post.Header.Tags) > 0 {
 			tags = "<p class='post-tags'>"
 			for _, tag := range post.Header.Tags {
 				tags += fmt.Sprintf("<a href='/tags/%s'>#%s</a>", html.EscapeString(tag), html.EscapeString(tag))
-				generateTagTopPage(renderer, post, tag)
+				tagMap[tag] = append(tagMap[tag], post)
 			}
 			tags += "</p>"
 		}
+
+		/* START debug code */
+		for _, post := range tagMap {
+			for _, p := range post {
+				fmt.Printf("%+v\n", p.Header.Tags)
+			}
+		}
+		/* END debug code */
 
 		title := []byte(fmt.Sprintf("# %s\n", post.Header.Title))
 		content := md2HTML(append(title, post.Body...), renderer)
