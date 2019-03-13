@@ -219,7 +219,8 @@ func reset() {
         file.RemoveDir(dir)
     }
     file.RemoveDir("public/css")
-    file.RemoveDir("public/tags/*")
+    file.RemoveDir("public/tags")
+    file.CreateDir("public/tags")
     file.RemoveFile("public/index.html")
     file.RemoveFile("theme/template/header.html")
 }
