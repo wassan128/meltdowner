@@ -194,7 +194,8 @@ func generateTagTopPage(renderer *ChromaRenderer, tagMap map[string][]*parser.Po
     for tag, posts := range tagMap {
         tagPath := createTagDir(tag)
 
-        mdTagTop := "<ul class='top'>\n"
+        mdTagTop := fmt.Sprintf("<h2 style='background: transparent;'>tag: #%s</h2>", tag)
+        mdTagTop += "<ul class='top'>\n"
         for _, post := range posts {
             date := fmt.Sprintf("%s/%s/%s", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
             dateSpan := fmt.Sprintf("<span>%s</span>", date)
