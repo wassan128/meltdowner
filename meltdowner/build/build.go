@@ -197,6 +197,10 @@ func generateTagTopPage(renderer *ChromaRenderer, tagMap map[string][]*parser.Po
         mdTagTop := fmt.Sprintf("<h2 style='background: transparent;'>tag: #%s</h2>", tag)
         mdTagTop += "<ul class='top'>\n"
         for _, post := range posts {
+            if post.Header.Public == false {
+                util.Info(fmt.Sprintf("Found hidden flag: %s", post.Header.Title))
+                continue
+            }
             date := fmt.Sprintf("%s/%s/%s", post.Header.Date.Year, post.Header.Date.Month, post.Header.Date.Date)
             dateSpan := fmt.Sprintf("<span>%s</span>", date)
             link := concatRootPath(filepath.Join(date, post.Header.Id))
