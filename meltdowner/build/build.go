@@ -196,7 +196,7 @@ func generateTagTopPage(renderer *ChromaRenderer, tagMap map[string][]*parser.Po
     for tag, posts := range tagMap {
         tagPath := createTagDir(tag)
 
-        mdTagTop := fmt.Sprintf("<h2 style='background: transparent;'>tag: #%s</h2>", tag)
+        mdTagTop := fmt.Sprintf("<h2 style='color: #ccc'>tag: #%s</h2>", tag)
         mdTagTop += "<ul class='top'>\n"
         for _, post := range posts {
             if post.Header.Public == false {
