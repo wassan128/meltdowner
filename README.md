@@ -1,6 +1,6 @@
 # MeltDowner
 * convert markdown to html
-* future work: blog manager for me
+* simple static site generator
 
 ## How to build
 * `git clone git@github.com:wassan128/meltdowner.git`
