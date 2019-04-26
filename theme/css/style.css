@@ -49,7 +49,6 @@ body {
             font-family: "IPAゴシック";
             font-weight: 300;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-            transition: 0.5s;
         }
         header img {
             width: 100px;
@@ -207,7 +206,6 @@ body {
                     background: #fff;
                     display: block;
                     border-bottom: 10px solid #519175;
-                    transition: 1s;
                 }
                 main ul.top li a:hover {
                     background: #ddd;
