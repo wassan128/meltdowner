@@ -8,19 +8,19 @@
 
 ## How to use
 ### Initialize
-`./melt init`
+`melt init`
 
 ### Create new post
-`./melt new "POST TITLE"`
+`melt new "POST TITLE"`
 
 ### Write post content
 `vim source/YYYYMMDD_POST_TITLE.md`
 
 ### Start server
-`./melt server`
+`melt server`
 
 ### Generate static content
-`./melt generate`
+`melt generate`
 
 ## License
 MIT
