@@ -162,6 +162,7 @@ body {
             background: #eee;
             border-radius: 3px;
             padding: 0.2em;
+            word-break: break-word;
         }
         main em {
             font-weight: bold;
