@@ -32,19 +32,26 @@ func GetConfig() Config {
 }
 
 func (c Config) Validate() []string {
+    const (
+        WARNING = iota
+        ERROR
+    )
+
     checks := []struct{
         bad bool
         msg string
+        kind int
     } {
-        { c.Blog.Title == "", "Title must specifiy." },
-        { c.Blog.SubTitle == "", "Subtitle does not specified." },
-        { c.Blog.RootPath == "", "RootPath must specify." },
-        { c.Blog.IconURL== "", "Icon url does not specified." },
-        { c.Blog.Author== "", "Author does not specified." },
+        { c.Blog.Title == "", "Title must specifiy.", ERROR },
+        { c.Blog.SubTitle == "", "Subtitle does not specified.", WARNING },
+        { c.Blog.RootPath == "", "RootPath must specify.", ERROR },
+        { c.Blog.IconURL== "", "Icon url does not specified.", WARNING },
+        { c.Blog.Author== "", "Author does not specified.", WARNING },
         {
             c.GitHub.Repo != "" &&
             (c.GitHub.Id == "" || c.GitHub.Email == ""),
             "GitHub repository specified but GitHub ID or Email does not specified.",
+            WARNING,
         },
     }
 
