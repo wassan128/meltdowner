@@ -152,7 +152,8 @@ var newCmd = &cobra.Command{
     Use: "new",
     Short: "Create new post",
     Run: func(cmd *cobra.Command, args []string) {
-        title := strings.Replace(args[0], " ", "-", -1)
+        title := args[0]
+        titleForFileName := strings.Replace(title, " ", "-", -1)
         util.Info(fmt.Sprintf("Create new post: %s", title))
 
         year, month, date, _, _, _ := getNowTime()
@@ -166,7 +167,7 @@ var newCmd = &cobra.Command{
             }
         }
 
-        postPath := fmt.Sprintf("%s_%d_%s", dateStr, id, title)
+        postPath := fmt.Sprintf("%s_%d_%s", dateStr, id, titleForFileName)
         mdPath := fmt.Sprintf("%s.md", postPath)
         file.CreateDir(postPath)
 
