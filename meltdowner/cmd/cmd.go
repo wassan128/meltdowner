@@ -75,7 +75,11 @@ var initCmd = &cobra.Command{
             URLs: []string{Config.GitHub.Repo},
         })
         util.ExitIfError(err)
-        util.Info(fmt.Sprintf("Created remote(origin->%s)", Config.GitHub.Repo))
+        if Config.GitHub.Repo != "" {
+            util.Info(fmt.Sprintf("Created remote(origin->%s)", Config.GitHub.Repo))
+        } else {
+            util.Info("Remote repository does not registered")
+        }
 
         branch := plumbing.ReferenceName("refs/heads/gh-pages")
         err = worktree.Pull(&git.PullOptions{
