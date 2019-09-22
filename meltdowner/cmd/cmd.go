@@ -70,12 +70,12 @@ var initCmd = &cobra.Command{
         worktree, err := repo.Worktree()
         util.ExitIfError(err)
 
-        _, err = repo.CreateRemote(&gitConfig.RemoteConfig{
-            Name: "origin",
-            URLs: []string{Config.GitHub.Repo},
-        })
-        util.ExitIfError(err)
         if Config.GitHub.Repo != "" {
+            _, err = repo.CreateRemote(&gitConfig.RemoteConfig{
+                Name: "origin",
+                URLs: []string{Config.GitHub.Repo},
+            })
+            util.ExitIfError(err)
             util.Info(fmt.Sprintf("Created remote(origin->%s)", Config.GitHub.Repo))
         } else {
             util.Info("Remote repository does not registered")
