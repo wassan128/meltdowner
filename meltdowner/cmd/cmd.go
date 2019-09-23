@@ -31,10 +31,10 @@ var RootCmd = &cobra.Command{
     Use: "melt",
     Short: "CLI tool for MeltDonwer(blog generator)",
     Run: func(cmd *cobra.Command, args []string) {
-        fmt.Println("melt(MeltDowner for CLI)")
-        fmt.Println("Usage: melt COMMAND [OPTION]")
-        fmt.Println("       See also `melt help` for more information.")
-        fmt.Println("Author: wassan128")
+        cmd.Println("melt(MeltDowner for CLI)")
+        cmd.Println("Usage: melt COMMAND [OPTION]")
+        cmd.Println("       See also `melt help` for more information.")
+        cmd.Println("Author: wassan128")
     },
 }
 
@@ -42,7 +42,7 @@ var versionCmd = &cobra.Command{
     Use: "version",
     Short: "Print the version number of melt",
     Run: func(cmd *cobra.Command, args []string) {
-        fmt.Println("melt v0.1")
+        cmd.Println("melt v0.1")
     },
 }
 

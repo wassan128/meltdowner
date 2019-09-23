@@ -1,12 +1,17 @@
 package main
 
 import (
+    "os"
+
     "github.com/wassan128/meltdowner/meltdowner/cmd"
-    "github.com/wassan128/meltdowner/meltdowner/util"
 )
 
 func main() {
-    err := cmd.RootCmd.Execute()
-    util.ExitIfError(err)
+    cmd.RootCmd.SetOutput(os.Stdout)
+    if err := cmd.RootCmd.Execute(); err != nil {
+        cmd.RootCmd.SetOutput(os.Stderr)
+        cmd.RootCmd.Println(err)
+        os.Exit(1)
+    }
 }
 
