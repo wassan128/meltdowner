@@ -1,17 +1,17 @@
 package main
 
 import (
-    "os"
+	"os"
 
-    "github.com/wassan128/meltdowner/meltdowner/cmd"
+	"meltdowner/src/interfaces"
 )
 
 func main() {
-    cmd.RootCmd.SetOutput(os.Stdout)
-    if err := cmd.RootCmd.Execute(); err != nil {
-        cmd.RootCmd.SetOutput(os.Stderr)
-        cmd.RootCmd.Println(err)
-        os.Exit(1)
-    }
+	interfaces.RootCmd.SetOutput(os.Stdout)
+	if err := interfaces.RootCmd.Execute(); err != nil {
+		interfaces.RootCmd.SetOutput(os.Stderr)
+		interfaces.RootCmd.Println(err)
+		os.Exit(1)
+	}
 }
 
